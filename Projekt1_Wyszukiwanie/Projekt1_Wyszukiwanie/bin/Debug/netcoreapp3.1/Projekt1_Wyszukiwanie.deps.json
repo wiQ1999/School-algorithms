@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v3.1",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v3.1": {
+      "Projekt1_Wyszukiwanie/1.0.0": {
+        "runtime": {
+          "Projekt1_Wyszukiwanie.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Projekt1_Wyszukiwanie/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
