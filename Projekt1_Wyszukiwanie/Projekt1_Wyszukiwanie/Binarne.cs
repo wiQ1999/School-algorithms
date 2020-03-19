@@ -6,6 +6,6 @@ namespace Projekt1_Wyszukiwanie
 {
 	class Binarne
 	{
-
+		//test
 	}
 }
