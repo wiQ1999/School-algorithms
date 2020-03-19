@@ -6,6 +6,10 @@ namespace Projekt1_Wyszukiwanie
 {
 	class Program
 	{
+		/// <summary>
+		/// Display an array on the console
+		/// </summary>
+		/// <param name="a_oMatrix">An array</param>
 		static void DisplayMatrix(uint[] a_oMatrix)
 		{
 			for (uint i = 0; i < a_oMatrix.Length; i++)
@@ -14,6 +18,13 @@ namespace Projekt1_Wyszukiwanie
 			}
 		}
 
+		/// <summary>
+		/// Generates an array with specific length
+		/// </summary>
+		/// <param name="a_uLength">Length of array</param>
+		/// <param name="a_uMaxValue">Maximum value randomly generate in array</param>
+		/// <param name="a_uLastNumber">Value on the last place in array</param>
+		/// <returns>A generated array</returns>
 		static uint[] CreateMatrix(uint a_uLength, uint a_uMaxValue, uint a_uLastNumber)
 		{
 			uint[] _oMatrix = new uint[a_uLength];
@@ -34,6 +45,12 @@ namespace Projekt1_Wyszukiwanie
 			return _oMatrix;
 		}
 
+		/// <summary>
+		/// Generates an array with specific length
+		/// </summary>
+		/// <param name="a_uLength">Length of array</param>
+		/// <param name="a_uMaxValue">Maximum value randomly generate in array</param>
+		/// <returns>A generated array</returns>
 		static uint[] CreateMatrix(uint a_uLength, uint a_uMaxValue)
 		{
 			uint[] _oMatrix = new uint[a_uLength];
@@ -50,12 +67,107 @@ namespace Projekt1_Wyszukiwanie
 
 		static void Main(string[] args)
 		{
+			#region Wyszukiwanie_Binarne_PEsymistyczne_PomiarCzasu
+
+			
+			//Wyświetlenie kolumn
+			Console.WriteLine("Matrix_Size\tSearch_Time\tLoops_Number");
+
+			//Deklaracja wyszukiwania binarnego
+			Binarne binarne = new Binarne();
+
+			//Testowo licznik pętli
+			int _iCouter = 1;
+
+			//Pętla po punktach pomiarowych
+			for (uint i = 2; i <= 198; i += 4)//50 punktów pomiarowych
+			{
+				//Tworzenie tablic o podanej wielkości
+				uint[] _oMatrix = CreateMatrix(i * 1000000, (uint)(int.MaxValue) - 1);
+
+				//Sortowanie tablicy od najmniejszych wartości do najwiekszych
+				Array.Sort(_oMatrix);
+
+				//Zmienna przechowująca ilosć punktów krytycznych
+				long _lCriticalPoints = 0;
+
+				//Szukanie elementu o wartości uint.max
+				uint _uResult = binarne.Pessimistic(_oMatrix, (uint)(int.MaxValue), out _lCriticalPoints);
+
+				//Wyświetlenie statystyk
+				Console.WriteLine($"{i * 1000000}\t\t{_lCriticalPoints}\t\t{_iCouter++}");//Testowo licznik pętli - Couter
+			}
+			
+
+			#endregion
+
 
 			#region Wyszukiwanie_Binarne_PEsymistyczne_PomiarCzasu
 
+			/*
+			//Wyświetlenie kolumn
+			Console.WriteLine("Matrix_Size\tSearch_Time\tLoops_Number");
 
+			//Deklaracja stopera
+			Stopwatch Time = new Stopwatch();
 
+			//Deklaracja wyszukiwania binarnego
+			Binarne binarne = new Binarne();
 
+			//Testowo licznik pętli
+			int _iCouter = 1;
+
+			//Pętla po punktach pomiarowych
+			for (uint i = 2; i <= 198; i += 4)//50 punktów pomiarowych
+			{
+				//Tworzenie tablic o podanej wielkości
+				uint[] _oMatrix = CreateMatrix(i * 1000000, (uint)(int.MaxValue) - 1);
+
+				//Sortowanie tablicy od najmniejszych wartości do najwiekszych
+				Array.Sort(_oMatrix);
+
+				//Tworzenie listy wyników czasowych
+				List<long> _oTimesList = new List<long>();
+
+				//Uśrednienie wyniku
+				for (int x = 0; x < 7; x++)//7 prób
+				{
+					//Rozpoczecie pomiaru czasu
+					Time.Start();
+
+					//Szukanie elementu o wartości uint.max
+					uint _uResult = binarne.Pessimistic(_oMatrix, (uint)(int.MaxValue));
+
+					//Dodanie wyniku do listy wyników czasowych
+					_oTimesList.Add(Time.ElapsedMilliseconds);
+
+					//Resetowanie stopera
+					Time.Reset();
+				}
+
+				//Sortowanie tablicy wyników czasowych
+				_oTimesList.Sort();
+
+				//Usunięcie skrajnych wartości
+				_oTimesList.RemoveAt(0);
+				_oTimesList.RemoveAt(_oTimesList.Count - 1);
+
+				//Deklaracja zmiennej uśredniajacej wynik
+				long _lAverage = 0;
+
+				//Sumowanie wyników
+				foreach (long point in _oTimesList)
+				{
+					_lAverage += point;
+				}
+
+				//Uśrednienie wyniku
+				_lAverage /= _oTimesList.Count;
+
+				//Wyświetlenie statystyk
+				Console.WriteLine($"{i * 1000000}\t\t{_lAverage}\t\t{_iCouter++}");//Testowo licznik pętli - Couter
+			}
+			*/
 
 			#endregion
 
@@ -116,7 +228,7 @@ namespace Projekt1_Wyszukiwanie
 
 			#region Wyszukiwanie_Liniowe_Pesymistyczne_Instrumentacja
 
-
+			/*
 			//Wyświetlenie kolumn
 			Console.WriteLine("Matrix_Size\tCritical_Points\tLoops_Number");
 
@@ -141,7 +253,7 @@ namespace Projekt1_Wyszukiwanie
 				//Wyświetlenie statystyk
 				Console.WriteLine($"{i * 1000000}\t\t{_lCriticalPoints}\t\t{_iCouter++}");//Testowo licznik pętli - Couter
 			}
-			
+			*/
 
 			#endregion
 
