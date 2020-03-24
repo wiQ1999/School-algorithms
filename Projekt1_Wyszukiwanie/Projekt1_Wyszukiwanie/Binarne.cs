@@ -1,12 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Projekt1_Wyszukiwanie
+﻿namespace Projekt1_Wyszukiwanie
 {
 	class Binarne
 	{
-		public uint Pessimistic(uint[] a_oMatrix, uint a_uSearchingNumber, out long _lCriticalPoints)
+		/// <summary>
+		/// Binary searching of array using instrumentation / critical points
+		/// </summary>
+		/// <param name="a_oMatrix">An array</param>
+		/// <param name="a_uSearchingNumber">Number the function is looking for</param>
+		/// <param name="_lCriticalPoints">Return value with count of critical points</param>
+		/// <returns></returns>
+		public uint BinSearchInst(uint[] a_oMatrix, uint a_uSearchingNumber, out long _lCriticalPoints)
 		{
 			uint _uLeft = 0;
 			uint _uRight = (uint)(a_oMatrix.Length - 1);
@@ -42,7 +45,13 @@ namespace Projekt1_Wyszukiwanie
 			return 0;
 		}
 
-		public uint Pessimistic(uint[] a_oMatrix, uint a_uSearchingNumber)
+		/// <summary>
+		/// Binary searching of array using time measuring
+		/// </summary>
+		/// <param name="a_oMatrix">An array</param>
+		/// <param name="a_uSearchingNumber">Number the function is looking for</param>
+		/// <returns></returns>
+		public uint BinSearchTime(uint[] a_oMatrix, uint a_uSearchingNumber)
 		{
 			uint _uLeft = 0;
 			uint _uRight = (uint)(a_oMatrix.Length - 1);
