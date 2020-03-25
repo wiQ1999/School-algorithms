@@ -12,9 +12,9 @@ namespace Projekt1_Wyszukiwanie
 		/// Display an array on the console
 		/// </summary>
 		/// <param name="a_oMatrix">An array</param>
-		static void DisplayMatrix(uint[] a_oMatrix)
+		static void DisplayMatrix(int[] a_oMatrix)
 		{
-			for (uint i = 0; i < a_oMatrix.Length; i++)
+			for (int i = 0; i < a_oMatrix.Length; i++)
 			{
 				Console.Write(i.ToString());
 			}
@@ -27,13 +27,13 @@ namespace Projekt1_Wyszukiwanie
 		/// <param name="a_uMaxValue">Maximum value randomly generate in array</param>
 		/// <param name="a_uLastNumber">Value on the last place in array</param>
 		/// <returns>A generated array</returns>
-		static uint[] CreateMatrix(uint a_uLength, uint a_uMaxValue, uint a_uLastNumber)
+		static int[] CreateMatrix(int a_uLength, int a_uMaxValue, int a_uLastNumber)
 		{
-			uint[] _oMatrix = new uint[a_uLength];
+			int[] _oMatrix = new int[a_uLength];
 
 			Random rnd = new Random();
 
-			for (uint i = 0; i < a_uLength; i++)
+			for (int i = 0; i < a_uLength; i++)
 			{
 				if(i == a_uLength - 1)
 				{
@@ -41,7 +41,7 @@ namespace Projekt1_Wyszukiwanie
 					break;
 				}
 
-				_oMatrix[i] = (uint)rnd.Next(0, (int)(a_uMaxValue + 1));
+				_oMatrix[i] = rnd.Next(0, a_uMaxValue + 1);
 			}
 
 			return _oMatrix;
@@ -53,15 +53,15 @@ namespace Projekt1_Wyszukiwanie
 		/// <param name="a_uLength">Length of array</param>
 		/// <param name="a_uMaxValue">Maximum value randomly generate in array</param>
 		/// <returns>A generated array</returns>
-		static uint[] CreateMatrix(uint a_uLength, uint a_uMaxValue)
+		static int[] CreateMatrix(int a_uLength, int a_uMaxValue)
 		{
-			uint[] _oMatrix = new uint[a_uLength];
+			int[] _oMatrix = new int[a_uLength];
 
 			Random rnd = new Random();
 
 			for (uint i = 0; i < a_uLength; i++)
 			{
-				_oMatrix[i] = (uint)rnd.Next(0, (int)(a_uMaxValue + 1));
+				_oMatrix[i] = rnd.Next(0, a_uMaxValue + 1);
 			}
 
 			return _oMatrix;
@@ -82,13 +82,13 @@ namespace Projekt1_Wyszukiwanie
 			int _iCouter = 1;
 
 			//Pętla po punktach pomiarowych
-			for (uint i = 2; i <= 280; i += 4)//70 punktów pomiarowych
+			for (int i = 2; i <= 280; i += 4)//70 punktów pomiarowych
 			{
 				//Tworzenie tablic o podanej wielkości
-				uint[] _oMatrix = CreateMatrix(i * 1000000, 99, 100);//Wraz ze sztywno określoną ostatnią wartośćia w tablicy
+				int[] _oMatrix = CreateMatrix(i * 1000000, int.MaxValue - 1);
 
 				//Sprawdzenie wartości peirwszego elementu w tablicy
-				uint _uFirstNumber = _oMatrix[0];
+				int _uMiddleNumber = _oMatrix[(_oMatrix.Length - 1) / 2];
 
 				//Zmienna przechowująca ilosć punktów krytycznych
 				long _lCriticalPoints = 0;
@@ -96,24 +96,17 @@ namespace Projekt1_Wyszukiwanie
 				//Zmienna przechowująca sumę punktów pomiaroywch między przypadkiem optymistycznym a pesymistycznym
 				long _lCriticalPointsSum = 0;
 
-				//szukanie przypadku pesymistycznego oraz optymistycznego
-				for (int y = 0; y < 2; y++)
-				{
-					//Sprawdzenie szukanego elementu
-					if (y == 0)
-					{
-						//Szukanie pierwszego elementu
-						binarne.BinSearchInst(_oMatrix, _uFirstNumber, out _lCriticalPoints);
-					}
-					else
-					{
-						//Szukanie ostatniego elementu
-						binarne.BinSearchInst(_oMatrix, 100, out _lCriticalPoints);
-					}
+				//Szukanie środkowego elementu
+				binarne.BinSearchInst(_oMatrix, _uMiddleNumber, out _lCriticalPoints);
 
-					//Sumowanie punktów krytycznych
-					_lCriticalPointsSum += _lCriticalPoints;
-				}
+				//Sumowanie punktów krytycznych
+				_lCriticalPointsSum += _lCriticalPoints;
+
+				//Szukanie ostatniego elementu
+				binarne.BinSearchInst(_oMatrix, int.MaxValue, out _lCriticalPoints);
+
+				//Sumowanie punktów krytycznych
+				_lCriticalPointsSum += _lCriticalPoints;
 
 				//Wyświetlenie statystyk
 				Console.WriteLine($"{i * 1000000}\t\t{_lCriticalPointsSum / 2}\t\t{_iCouter++}");//Testowo licznik pętli - Couter
@@ -126,7 +119,7 @@ namespace Projekt1_Wyszukiwanie
 			Console.WriteLine("Wyszukiwanie_Binarne_Pesymistyczne_Instrumentacja");
 
 			//Wyświetlenie kolumn
-			Console.WriteLine("Matrix_Size\tSearch_Time\tLoops_Number");
+			Console.WriteLine("Matrix_Size\tCritical_Points\tLoops_Number");
 
 			//Deklaracja wyszukiwania binarnego
 			Binarne binarne = new Binarne();
@@ -135,10 +128,10 @@ namespace Projekt1_Wyszukiwanie
 			int _iCouter = 1;
 
 			//Pętla po punktach pomiarowych
-			for (uint i = 2; i <= 280; i += 4)//70 punktów pomiarowych
+			for (int i = 2; i <= 280; i += 4)//70 punktów pomiarowych
 			{
 				//Tworzenie tablic o podanej wielkości
-				uint[] _oMatrix = CreateMatrix(i * 1000000, (uint)(int.MaxValue) - 1);
+				int[] _oMatrix = CreateMatrix(i * 1000000, int.MaxValue - 1);
 
 				//Sortowanie tablicy od najmniejszych wartości do najwiekszych
 				Array.Sort(_oMatrix);
@@ -147,7 +140,7 @@ namespace Projekt1_Wyszukiwanie
 				long _lCriticalPoints = 0;
 
 				//Szukanie elementu o wartości uint.max
-				uint _uResult = binarne.BinSearchInst(_oMatrix, (uint)(int.MaxValue), out _lCriticalPoints);
+				binarne.BinSearchInst(_oMatrix, int.MaxValue, out _lCriticalPoints);
 
 				//Wyświetlenie statystyk
 				Console.WriteLine($"{i * 1000000}\t\t{_lCriticalPoints}\t\t{_iCouter++}");//Testowo licznik pętli - Couter
@@ -172,13 +165,13 @@ namespace Projekt1_Wyszukiwanie
 			int _iCouter = 1;
 
 			//Pętla po punktach pomiarowych
-			for (uint i = 2; i <= 280; i += 4)//70 punktów pomiarowych
+			for (int i = 2; i <= 280; i += 4)//70 punktów pomiarowych
 			{
 				//Tworzenie tablic o podanej wielkości
-				uint[] _oMatrix = CreateMatrix(i * 1000000, 99, 100);//Wraz ze sztywno określoną ostatnią wartośćia w tablicy
+				int[] _oMatrix = CreateMatrix(i * 1000000, int.MaxValue - 1);//Wraz ze sztywno określoną ostatnią wartośćia w tablicy
 
 				//Sprawdzenie wartości peirwszego elementu w tablicy
-				uint _uFirstNumber = _oMatrix[0];
+				int _uFirstNumber = _oMatrix[0];
 
 				//Tworzenie listy wyników czasowych
 				List<long> _oTimesList = new List<long>();
@@ -204,7 +197,7 @@ namespace Projekt1_Wyszukiwanie
 						else
 						{
 							//Szukanie ostatniego elementu
-							binarne.BinSearchTime(_oMatrix, 100);
+							binarne.BinSearchTime(_oMatrix, int.MaxValue);
 						}
 
 						//Sumowanie czasów
@@ -260,10 +253,10 @@ namespace Projekt1_Wyszukiwanie
 			int _iCouter = 1;
 
 			//Pętla po punktach pomiarowych
-			for (uint i = 2; i <= 280; i += 4)//70 punktów pomiarowych
+			for (int i = 2; i <= 280; i += 4)//70 punktów pomiarowych
 			{
 				//Tworzenie tablic o podanej wielkości
-				uint[] _oMatrix = CreateMatrix(i * 1000000, (uint)(int.MaxValue) - 1);
+				int[] _oMatrix = CreateMatrix(i * 1000000, int.MaxValue - 1);
 
 				//Sortowanie tablicy od najmniejszych wartości do najwiekszych
 				Array.Sort(_oMatrix);
@@ -278,7 +271,7 @@ namespace Projekt1_Wyszukiwanie
 					Time.Start();
 
 					//Szukanie elementu o wartości uint.max
-					uint _uResult = binarne.BinSearchTime(_oMatrix, (uint)(int.MaxValue));
+					binarne.BinSearchTime(_oMatrix, int.MaxValue);
 
 					//Dodanie wyniku do listy wyników czasowych
 					_oTimesList.Add(Time.ElapsedMilliseconds);
@@ -326,13 +319,13 @@ namespace Projekt1_Wyszukiwanie
 			int _iCouter = 1;
 
 			//Pętla po punktach pomiarowych
-			for (uint i = 2; i <= 280; i += 4)//70 punktów pomiarowych
+			for (int i = 2; i <= 280; i += 4)//70 punktów pomiarowych
 			{
 				//Tworzenie tablic o podanej wielkości
-				uint[] _oMatrix = CreateMatrix(i * 1000000, 99, 100);//Wraz ze sztywno określoną ostatnią wartośćia w tablicy
+				int[] _oMatrix = CreateMatrix(i * 1000000, int.MaxValue - 1);//Wraz ze sztywno określoną ostatnią wartośćia w tablicy
 
 				//Sprawdzenie wartości peirwszego elementu w tablicy
-				uint _uFirstNumber = _oMatrix[0];
+				int _uFirstNumber = _oMatrix[0];
 
 				//Zmienna przechowująca ilosć punktów krytycznych
 				long _lCriticalPoints = 0;
@@ -340,24 +333,17 @@ namespace Projekt1_Wyszukiwanie
 				//Zmienna przechowująca sumę punktów pomiaroywch między przypadkiem optymistycznym a pesymistycznym
 				long _lCriticalPointsSum = 0;
 
-				//szukanie przypadku pesymistycznego oraz optymistycznego
-				for (int y = 0; y < 2; y++)
-				{
-					//Sprawdzenie szukanego elementu
-					if (y == 0)
-					{
-						//Szukanie pierwszego elementu
-						liniowe.LinSearchInst(_oMatrix, _uFirstNumber, out _lCriticalPoints);
-					}
-					else
-					{
-						//Szukanie ostatniego elementu
-						liniowe.LinSearchInst(_oMatrix, 100, out _lCriticalPoints);
-					}
+				//Szukanie pierwszego elementu
+				liniowe.LinSearchInst(_oMatrix, _uFirstNumber, out _lCriticalPoints);
 
-					//Sumowanie punktów krytycznych
-					_lCriticalPointsSum += _lCriticalPoints;
-				}
+				//Sumowanie punktów krytycznych
+				_lCriticalPointsSum += _lCriticalPoints;
+
+				//Szukanie ostatniego elementu
+				liniowe.LinSearchInst(_oMatrix, int.MaxValue, out _lCriticalPoints);
+
+				//Sumowanie punktów krytycznych
+				_lCriticalPointsSum += _lCriticalPoints;
 
 				//Wyświetlenie statystyk
 				Console.WriteLine($"{i * 1000000}\t\t{_lCriticalPointsSum / 2}\t\t{_iCouter++}");//Testowo licznik pętli - Couter
@@ -379,16 +365,16 @@ namespace Projekt1_Wyszukiwanie
 			int _iCouter = 1;
 
 			//Pętla po punktach pomiarowych
-			for (uint i = 2; i <= 280; i += 4)//70 punktów pomiarowych
+			for (int i = 2; i <= 280; i += 4)//70 punktów pomiarowych
 			{
 				//Tworzenie tablic o podanej wielkości
-				uint[] _oMatrix = CreateMatrix(i * 1000000, 99);
+				int[] _oMatrix = CreateMatrix(i * 1000000, int.MaxValue - 1);
 
 				//Zmienna przechowująca ilosć punktów krytycznych
 				long _lCriticalPoints = 0;
 
 				//Szukanie elementu o wartości 100
-				liniowe.LinSearchInst(_oMatrix, 100, out _lCriticalPoints);
+				liniowe.LinSearchInst(_oMatrix, int.MaxValue, out _lCriticalPoints);
 
 				//Wyświetlenie statystyk
 				Console.WriteLine($"{i * 1000000}\t\t{_lCriticalPoints}\t\t{_iCouter++}");//Testowo licznik pętli - Couter
@@ -413,13 +399,13 @@ namespace Projekt1_Wyszukiwanie
 			int _iCouter = 1;
 
 			//Pętla po punktach pomiarowych
-			for (uint i = 2; i <= 280; i += 4)//70 punktów pomiarowych
+			for (int i = 2; i <= 280; i += 4)//70 punktów pomiarowych
 			{
 				//Tworzenie tablic o podanej wielkości
-				uint[] _oMatrix = CreateMatrix(i * 1000000, 99, 100);//Wraz ze sztywno określoną ostatnią wartośćia w tablicy
+				int[] _oMatrix = CreateMatrix(i * 1000000, int.MaxValue - 1);//Wraz ze sztywno określoną ostatnią wartośćia w tablicy
 
 				//Sprawdzenie wartości peirwszego elementu w tablicy
-				uint _uFirstNumber = _oMatrix[0];
+				int _uFirstNumber = _oMatrix[0];
 
 				//Tworzenie listy wyników czasowych
 				List<long> _oTimesList = new List<long>();
@@ -445,7 +431,7 @@ namespace Projekt1_Wyszukiwanie
 						else
 						{
 							//Szukanie ostatniego elementu
-							liniowe.LinSearchTime(_oMatrix, 100);
+							liniowe.LinSearchTime(_oMatrix, int.MaxValue);
 						}
 
 						//Sumowanie czasów
@@ -501,10 +487,10 @@ namespace Projekt1_Wyszukiwanie
 			int _iCouter = 1;
 
 			//Pętla po punktach pomiarowych
-			for (uint i = 2; i <= 280; i += 4)//70 punktów pomiarowych
+			for (int i = 2; i <= 280; i += 4)//70 punktów pomiarowych
 			{
 				//Tworzenie tablic o podanej wielkości
-				uint[] _oMatrix = CreateMatrix(i * 1000000, 99);
+				int[] _oMatrix = CreateMatrix(i * 1000000, int.MaxValue - 1);
 
 				//Tworzenie listy wyników czasowych
 				List<long> _oTimesList = new List<long>();
@@ -516,7 +502,7 @@ namespace Projekt1_Wyszukiwanie
 					Time.Start();
 
 					//Szukanie elementu o wartości 100
-					liniowe.LinSearchTime(_oMatrix, 100);
+					liniowe.LinSearchTime(_oMatrix, int.MaxValue);
 
 					//Dodanie wyniku do listy wyników czasowych
 					_oTimesList.Add(Time.ElapsedMilliseconds);
@@ -569,7 +555,7 @@ namespace Projekt1_Wyszukiwanie
 			Bin_Ave_Time();
 			Bin_Pes_Instr();
 			Bin_Ave_Instr();
-
+			
 
 			Console.ReadKey();
 		}

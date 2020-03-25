@@ -9,20 +9,18 @@
 		/// <param name="a_uSearchingNumber">Number the function is looking for</param>
 		/// <param name="_lCriticalPoints">Return value with count of critical points</param>
 		/// <returns></returns>
-		public uint BinSearchInst(uint[] a_oMatrix, uint a_uSearchingNumber, out long _lCriticalPoints)
+		public long BinSearchInst(int[] a_oMatrix, int a_uSearchingNumber, out long _lCriticalPoints)
 		{
-			uint _uLeft = 0;
-			uint _uRight = (uint)(a_oMatrix.Length - 1);
+			int _uLeft = 0;
+			int _uRight = a_oMatrix.Length - 1;
 
-			_lCriticalPoints = 2;
+			_lCriticalPoints = 0;
 
 			while (_uLeft <= _uRight)
 			{
-				_lCriticalPoints++;
+				int _uCenter = (_uLeft + _uRight) / 2;
 
-				uint _uCenter = (_uLeft + _uRight) / 2;
-				_lCriticalPoints += 3;
-
+				
 				if (a_oMatrix[_uCenter] == a_uSearchingNumber)
 				{
 					_lCriticalPoints++;
@@ -32,13 +30,11 @@
 				{
 					_lCriticalPoints += 2;
 					_uRight = _uCenter - 1;
-					_lCriticalPoints += 2;
 				}
 				else
 				{
-					_lCriticalPoints += 3;
-					_uLeft = _uCenter + 1;
 					_lCriticalPoints += 2;
+					_uLeft = _uCenter + 1;
 				}
 			}
 
@@ -51,14 +47,14 @@
 		/// <param name="a_oMatrix">An array</param>
 		/// <param name="a_uSearchingNumber">Number the function is looking for</param>
 		/// <returns></returns>
-		public uint BinSearchTime(uint[] a_oMatrix, uint a_uSearchingNumber)
+		public int BinSearchTime(int[] a_oMatrix, int a_uSearchingNumber)
 		{
-			uint _uLeft = 0;
-			uint _uRight = (uint)(a_oMatrix.Length - 1);
+			int _uLeft = 0;
+			int _uRight = a_oMatrix.Length - 1;
 
 			while (_uLeft <= _uRight)
 			{
-				uint _uCenter = (_uLeft + _uRight) / 2;
+				int _uCenter = (_uLeft + _uRight) / 2;
 
 				if (a_oMatrix[_uCenter] == a_uSearchingNumber)
 					return a_uSearchingNumber;
