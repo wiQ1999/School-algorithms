@@ -182,30 +182,26 @@ namespace Projekt1_Wyszukiwanie
 				//Uśrednienie wyniku
 				for (int x = 0; x < 7; x++)//7 prób
 				{
-					//szukanie przypadku pesymistycznego oraz optymistycznego
-					for (int y = 0; y < 2; y++)
-					{
-						//Rozpoczecie pomiaru czasu
-						Time.Start();
+					//Rozpoczecie pomiaru czasu
+					Time.Start();
 
-						//Sprawdzenie szukanego elementu
-						if (y == 0)
-						{
-							//Szukanie pierwszego elementu
-							binarne.BinSearchTime(_oMatrix, _iMiddleNumber);
-						}
-						else
-						{
-							//Szukanie srodkowego elementu
-							binarne.BinSearchTime(_oMatrix, int.MaxValue);
-						}
+					//Szukanie pierwszego elementu
+					binarne.BinSearchTime(_oMatrix, _iMiddleNumber);
 
-						//Sumowanie czasów
-						_lTimeSum += Time.ElapsedMilliseconds;
+					//Sumowanie czasów
+					_lTimeSum += Time.ElapsedMilliseconds;
 
-						//Resetowanie stopera
-						Time.Reset();
-					}
+					//Resetowanie stopera
+					Time.Restart();
+
+					//Szukanie srodkowego elementu
+					binarne.BinSearchTime(_oMatrix, int.MaxValue);
+
+					//Sumowanie czasów
+					_lTimeSum += Time.ElapsedMilliseconds;
+
+					//Resetowanie stopera
+					Time.Reset();
 
 					//Dodanie Uśrednionej sumy czasu do listy wyników czasowych
 					_oTimesList.Add(_lTimeSum / 2);
@@ -264,6 +260,9 @@ namespace Projekt1_Wyszukiwanie
 				//Tworzenie listy wyników czasowych
 				List<long> _oTimesList = new List<long>();
 
+				//Zmienna przechowująca wynik czasowy
+				long _lTimeSum = 0;
+
 				//Uśrednienie wyniku
 				for (int x = 0; x < 7; x++)//7 prób
 				{
@@ -273,11 +272,14 @@ namespace Projekt1_Wyszukiwanie
 					//Szukanie elementu o wartości uint.max
 					binarne.BinSearchTime(_oMatrix, int.MaxValue);
 
-					//Dodanie wyniku do listy wyników czasowych
-					_oTimesList.Add(Time.ElapsedMilliseconds);
+					//Pomiar czasu
+					_lTimeSum += Time.ElapsedMilliseconds;
 
 					//Resetowanie stopera
 					Time.Reset();
+
+					//Dodanie wyniku do listy wyników czasowych
+					_oTimesList.Add(_lTimeSum);
 				}
 
 				//Sortowanie tablicy wyników czasowych
@@ -416,30 +418,26 @@ namespace Projekt1_Wyszukiwanie
 				//Uśrednienie wyniku
 				for (int x = 0; x < 7; x++)//7 prób
 				{
-					//szukanie przypadku pesymistycznego oraz optymistycznego
-					for (int y = 0; y < 2; y++)
-					{
-						//Rozpoczecie pomiaru czasu
-						Time.Start();
+					//Rozpoczecie pomiaru czasu
+					Time.Start();
 
-						//Sprawdzenie szukanego elementu
-						if (y == 0)
-						{
-							//Szukanie pierwszego elementu
-							liniowe.LinSearchTime(_oMatrix, _iFirstNumber);
-						}
-						else
-						{
-							//Szukanie ostatniego elementu
-							liniowe.LinSearchTime(_oMatrix, int.MaxValue);
-						}
+					//Szukanie pierwszego elementu
+					liniowe.LinSearchTime(_oMatrix, _iFirstNumber);
 
-						//Sumowanie czasów
-						_lTimeSum += Time.ElapsedMilliseconds;
+					//Sumowanie czasów
+					_lTimeSum += Time.ElapsedMilliseconds;
 
-						//Resetowanie stopera
-						Time.Reset();
-					}
+					//Resetowanie stopera
+					Time.Restart();
+
+					//Szukanie ostatniego elementu
+					liniowe.LinSearchTime(_oMatrix, int.MaxValue);		
+
+					//Sumowanie czasów
+					_lTimeSum += Time.ElapsedMilliseconds;
+
+					//Resetowanie stopera
+					Time.Reset();
 
 					//Dodanie Uśrednionej sumy czasu do listy wyników czasowych
 					_oTimesList.Add(_lTimeSum / 2);
@@ -495,6 +493,9 @@ namespace Projekt1_Wyszukiwanie
 				//Tworzenie listy wyników czasowych
 				List<long> _oTimesList = new List<long>();
 
+				//Zmienna przechowująca wynik czasowy
+				long _lTimeSum = 0;
+
 				//Uśrednienie wyniku
 				for (int x = 0; x < 7; x++)//7 prób
 				{
@@ -504,11 +505,14 @@ namespace Projekt1_Wyszukiwanie
 					//Szukanie elementu o wartości 100
 					liniowe.LinSearchTime(_oMatrix, int.MaxValue);
 
-					//Dodanie wyniku do listy wyników czasowych
-					_oTimesList.Add(Time.ElapsedMilliseconds);
+					//Pomiar czasu
+					_lTimeSum += Time.ElapsedMilliseconds;
 
 					//Resetowanie stopera
 					Time.Reset();
+
+					//Dodanie wyniku do listy wyników czasowych
+					_oTimesList.Add(_lTimeSum);
 				}
 
 				//Sortowanie tablicy wyników czasowych
@@ -545,12 +549,12 @@ namespace Projekt1_Wyszukiwanie
 
 			#endregion
 
-
+			
 			Lin_Pes_Time();
 			Lin_Ave_Time();
 			Lin_Pes_Instr();
 			Lin_Ave_Instr();
-
+			
 			Bin_Pes_Time();
 			Bin_Ave_Time();
 			Bin_Pes_Instr();
