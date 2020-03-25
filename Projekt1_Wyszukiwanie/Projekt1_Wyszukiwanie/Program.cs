@@ -87,8 +87,8 @@ namespace Projekt1_Wyszukiwanie
 				//Tworzenie tablic o podanej wielkości
 				int[] _oMatrix = CreateMatrix(i * 1000000, int.MaxValue - 1);
 
-				//Sprawdzenie wartości peirwszego elementu w tablicy
-				int _uMiddleNumber = _oMatrix[(_oMatrix.Length - 1) / 2];
+				//Sprawdzenie wartości środkowego elementu w tablicy
+				int _iMiddleNumber = _oMatrix[(_oMatrix.Length - 1) / 2];
 
 				//Zmienna przechowująca ilosć punktów krytycznych
 				long _lCriticalPoints = 0;
@@ -97,7 +97,7 @@ namespace Projekt1_Wyszukiwanie
 				long _lCriticalPointsSum = 0;
 
 				//Szukanie środkowego elementu
-				binarne.BinSearchInst(_oMatrix, _uMiddleNumber, out _lCriticalPoints);
+				binarne.BinSearchInst(_oMatrix, _iMiddleNumber, out _lCriticalPoints);
 
 				//Sumowanie punktów krytycznych
 				_lCriticalPointsSum += _lCriticalPoints;
@@ -170,8 +170,8 @@ namespace Projekt1_Wyszukiwanie
 				//Tworzenie tablic o podanej wielkości
 				int[] _oMatrix = CreateMatrix(i * 1000000, int.MaxValue - 1);//Wraz ze sztywno określoną ostatnią wartośćia w tablicy
 
-				//Sprawdzenie wartości peirwszego elementu w tablicy
-				int _uFirstNumber = _oMatrix[0];
+				//Sprawdzenie wartości środkowego elementu w tablicy
+				int _iMiddleNumber = _oMatrix[(_oMatrix.Length - 1) / 2];
 
 				//Tworzenie listy wyników czasowych
 				List<long> _oTimesList = new List<long>();
@@ -192,11 +192,11 @@ namespace Projekt1_Wyszukiwanie
 						if (y == 0)
 						{
 							//Szukanie pierwszego elementu
-							binarne.BinSearchTime(_oMatrix, _uFirstNumber);
+							binarne.BinSearchTime(_oMatrix, _iMiddleNumber);
 						}
 						else
 						{
-							//Szukanie ostatniego elementu
+							//Szukanie srodkowego elementu
 							binarne.BinSearchTime(_oMatrix, int.MaxValue);
 						}
 
@@ -325,7 +325,7 @@ namespace Projekt1_Wyszukiwanie
 				int[] _oMatrix = CreateMatrix(i * 1000000, int.MaxValue - 1);//Wraz ze sztywno określoną ostatnią wartośćia w tablicy
 
 				//Sprawdzenie wartości peirwszego elementu w tablicy
-				int _uFirstNumber = _oMatrix[0];
+				int _iFirstNumber = _oMatrix[0];
 
 				//Zmienna przechowująca ilosć punktów krytycznych
 				long _lCriticalPoints = 0;
@@ -334,7 +334,7 @@ namespace Projekt1_Wyszukiwanie
 				long _lCriticalPointsSum = 0;
 
 				//Szukanie pierwszego elementu
-				liniowe.LinSearchInst(_oMatrix, _uFirstNumber, out _lCriticalPoints);
+				liniowe.LinSearchInst(_oMatrix, _iFirstNumber, out _lCriticalPoints);
 
 				//Sumowanie punktów krytycznych
 				_lCriticalPointsSum += _lCriticalPoints;
@@ -405,7 +405,7 @@ namespace Projekt1_Wyszukiwanie
 				int[] _oMatrix = CreateMatrix(i * 1000000, int.MaxValue - 1);//Wraz ze sztywno określoną ostatnią wartośćia w tablicy
 
 				//Sprawdzenie wartości peirwszego elementu w tablicy
-				int _uFirstNumber = _oMatrix[0];
+				int _iFirstNumber = _oMatrix[0];
 
 				//Tworzenie listy wyników czasowych
 				List<long> _oTimesList = new List<long>();
@@ -426,7 +426,7 @@ namespace Projekt1_Wyszukiwanie
 						if (y == 0)
 						{
 							//Szukanie pierwszego elementu
-							liniowe.LinSearchTime(_oMatrix, _uFirstNumber);
+							liniowe.LinSearchTime(_oMatrix, _iFirstNumber);
 						}
 						else
 						{
