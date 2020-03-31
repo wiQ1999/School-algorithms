@@ -79,7 +79,7 @@ namespace Projekt1_Wyszukiwanie
 			Binarne binarne = new Binarne();
 
 			//Testowo licznik pętli
-			int _iCouter = 1;
+			int _iCouter = 0;
 
 			//Pętla po punktach pomiarowych
 			for (int i = 2; i <= 280; i += 4)//70 punktów pomiarowych
@@ -87,29 +87,33 @@ namespace Projekt1_Wyszukiwanie
 				//Tworzenie tablic o podanej wielkości
 				int[] _oMatrix = CreateMatrix(i * 1000000, int.MaxValue - 1);
 
-				//Sprawdzenie wartości środkowego elementu w tablicy
-				int _iMiddleNumber = _oMatrix[(_oMatrix.Length - 1) / 2];
+				//Sortowanie tablicy od najmniejszych wartości do najwiekszych
+				Array.Sort(_oMatrix);
 
-				//Zmienna przechowująca ilosć punktów krytycznych
-				long _lCriticalPoints = 0;
-
-				//Zmienna przechowująca sumę punktów pomiaroywch między przypadkiem optymistycznym a pesymistycznym
+				//Zmienna przechowująca sumę punktów pomiaroywch
 				long _lCriticalPointsSum = 0;
 
-				//Szukanie środkowego elementu
-				binarne.BinSearchInst(_oMatrix, _iMiddleNumber, out _lCriticalPoints);
+				//Licznik pętli średniej binarnej
+				uint _uAverageLoops = 0;
 
-				//Sumowanie punktów krytycznych
-				_lCriticalPointsSum += _lCriticalPoints;
+				//Pętla średniej binarnej
+				for (int j = 0; j < _oMatrix.Length / 2; j += 10000)//(długość tablicy / 2) / 10 000 prób
+				{
+					//Losowa liczba do szukania
+					int _iRandomNumber = _oMatrix[j];
 
-				//Szukanie ostatniego elementu
-				binarne.BinSearchInst(_oMatrix, int.MaxValue, out _lCriticalPoints);
+					//Szukanie elementu binarnie
+					binarne.BinSearchInst(_oMatrix, _iRandomNumber, out long _lCriticalPoints);//Zmienna przechowująca ilosć punktów krytycznych
 
-				//Sumowanie punktów krytycznych
-				_lCriticalPointsSum += _lCriticalPoints;
+					//Sumowanie punktów krytycznych
+					_lCriticalPointsSum += _lCriticalPoints;
+
+					//Inkrementacja licznika pętli
+					_uAverageLoops++;
+				}
 
 				//Wyświetlenie statystyk
-				Console.WriteLine($"{i * 1000000}\t\t{_lCriticalPointsSum / 2}\t\t{_iCouter++}");//Testowo licznik pętli - Couter
+				Console.WriteLine($"{i * 1000000}\t\t{_lCriticalPointsSum / _uAverageLoops}\t\t{++_iCouter}");//Testowo licznik pętli - Couter
 			}
 		}
 
@@ -125,7 +129,7 @@ namespace Projekt1_Wyszukiwanie
 			Binarne binarne = new Binarne();
 
 			//Testowo licznik pętli
-			int _iCouter = 1;
+			int _iCouter = 0;
 
 			//Pętla po punktach pomiarowych
 			for (int i = 2; i <= 280; i += 4)//70 punktów pomiarowych
@@ -136,14 +140,11 @@ namespace Projekt1_Wyszukiwanie
 				//Sortowanie tablicy od najmniejszych wartości do najwiekszych
 				Array.Sort(_oMatrix);
 
-				//Zmienna przechowująca ilosć punktów krytycznych
-				long _lCriticalPoints = 0;
-
-				//Szukanie elementu o wartości uint.max
-				binarne.BinSearchInst(_oMatrix, int.MaxValue, out _lCriticalPoints);
+				//Szukanie elementu binarnie
+				binarne.BinSearchInst(_oMatrix, int.MaxValue, out long _lCriticalPoints);//Zmienna przechowująca ilosć punktów krytycznych
 
 				//Wyświetlenie statystyk
-				Console.WriteLine($"{i * 1000000}\t\t{_lCriticalPoints}\t\t{_iCouter++}");//Testowo licznik pętli - Couter
+				Console.WriteLine($"{i * 1000000}\t\t{_lCriticalPoints}\t\t{++_iCouter}");//Testowo licznik pętli - Couter
 			}
 		}
 
@@ -162,72 +163,82 @@ namespace Projekt1_Wyszukiwanie
 			Binarne binarne = new Binarne();
 
 			//Testowo licznik pętli
-			int _iCouter = 1;
+			int _iCouter = 0;
 
 			//Pętla po punktach pomiarowych
 			for (int i = 2; i <= 280; i += 4)//70 punktów pomiarowych
 			{
 				//Tworzenie tablic o podanej wielkości
-				int[] _oMatrix = CreateMatrix(i * 1000000, int.MaxValue - 1);//Wraz ze sztywno określoną ostatnią wartośćia w tablicy
+				int[] _oMatrix = CreateMatrix(i * 1000000, int.MaxValue - 1);
 
-				//Sprawdzenie wartości środkowego elementu w tablicy
-				int _iMiddleNumber = _oMatrix[(_oMatrix.Length - 1) / 2];
+				//Sortowanie tablicy od najmniejszych wartości do najwiekszych
+				Array.Sort(_oMatrix);
+
+				//Tworzenie listy wyników czasowych średniej
+				List<long> _oTimesListAverage = new List<long>();
 
 				//Tworzenie listy wyników czasowych
 				List<long> _oTimesList = new List<long>();
 
-				//Zmienna przechowująca sumę czasów między przypadkiem optymistycznym a pesymistycznym
-				long _lTimeSum = 0;
+				//Licznik pętli średniej binarnej
+				uint _uAverageLoops = 0;
 
-				//Uśrednienie wyniku
-				for (int x = 0; x < 7; x++)//7 prób
+				//Pętla średniej binarnej
+				for (int j = 0; j < _oMatrix.Length / 2; j += 10000)//(długość tablicy / 2) / 10 000 prób
 				{
-					//Rozpoczecie pomiaru czasu
-					Time.Start();
+					//Losowa liczba do szukania
+					int _iRandomNumber = _oMatrix[j];
 
-					//Szukanie pierwszego elementu
-					binarne.BinSearchTime(_oMatrix, _iMiddleNumber);
+					//Uśrednienie wyniku czasowego
+					for (int x = 0; x < 10; x++)//10 prób
+					{
+						//Rozpoczecie pomiaru czasu
+						Time.Start();
 
-					//Sumowanie czasów
-					_lTimeSum += Time.ElapsedMilliseconds;
+						//Szukanie losowego elementu binarnie
+						binarne.BinSearchTime(_oMatrix, _iRandomNumber);
 
-					//Resetowanie stopera
-					Time.Restart();
+						//Pomiar czasu
+						Time.Stop();
 
-					//Szukanie srodkowego elementu
-					binarne.BinSearchTime(_oMatrix, int.MaxValue);
+						//Dodanie wyniku do listy wyników czasowych
+						_oTimesList.Add(Time.ElapsedMilliseconds);
 
-					//Sumowanie czasów
-					_lTimeSum += Time.ElapsedMilliseconds;
+						//Resetowanie stopera
+						Time.Reset();
+					}
 
-					//Resetowanie stopera
-					Time.Reset();
+					//Sortowanie listy wyników czasowych
+					_oTimesList.Sort();
 
-					//Dodanie Uśrednionej sumy czasu do listy wyników czasowych
-					_oTimesList.Add(_lTimeSum / 2);
+					//Usunięcie skrajnych wartości
+					_oTimesList.RemoveAt(0);
+					_oTimesList.RemoveAt(_oTimesList.Count - 1);
+
+					//Dodanie wyników do listy śreniej wyników czasowych
+					foreach (long time in _oTimesList)
+					{
+						_oTimesListAverage.Add(time);
+					}
+
+					//Inkrementacja licznika pętli
+					_uAverageLoops++;
 				}
-
-				//Sortowanie tablicy wyników czasowych
-				_oTimesList.Sort();
-
-				//Usunięcie skrajnych wartości
-				_oTimesList.RemoveAt(0);
-				_oTimesList.RemoveAt(_oTimesList.Count - 1);
 
 				//Deklaracja zmiennej uśredniajacej wynik
 				long _lAverage = 0;
 
 				//Sumowanie wyników
-				foreach (long point in _oTimesList)
+				foreach (long point in _oTimesListAverage)
 				{
 					_lAverage += point;
 				}
 
 				//Uśrednienie wyniku
-				_lAverage /= _oTimesList.Count;
+				_lAverage /= _oTimesListAverage.Count;
 
 				//Wyświetlenie statystyk
-				Console.WriteLine($"{i * 1000000}\t\t{_lAverage}\t\t{_iCouter++}");//Testowo licznik pętli - Couter
+				Console.WriteLine($"{i * 1000000}\t\t{_lAverage}\t\t{++_iCouter}");//Testowo licznik pętli - Couter
 			}
 		}
 
@@ -246,7 +257,7 @@ namespace Projekt1_Wyszukiwanie
 			Binarne binarne = new Binarne();
 
 			//Testowo licznik pętli
-			int _iCouter = 1;
+			int _iCouter = 0;
 
 			//Pętla po punktach pomiarowych
 			for (int i = 2; i <= 280; i += 4)//70 punktów pomiarowych
@@ -260,26 +271,23 @@ namespace Projekt1_Wyszukiwanie
 				//Tworzenie listy wyników czasowych
 				List<long> _oTimesList = new List<long>();
 
-				//Zmienna przechowująca wynik czasowy
-				long _lTimeSum = 0;
-
 				//Uśrednienie wyniku
-				for (int x = 0; x < 7; x++)//7 prób
+				for (int x = 0; x < 10; x++)//10 prób
 				{
 					//Rozpoczecie pomiaru czasu
 					Time.Start();
 
-					//Szukanie elementu o wartości uint.max
+					//Szukanie elementu binarnie
 					binarne.BinSearchTime(_oMatrix, int.MaxValue);
 
 					//Pomiar czasu
-					_lTimeSum += Time.ElapsedMilliseconds;
+					Time.Stop();
+
+					//Dodanie wyniku do listy wyników czasowych
+					_oTimesList.Add(Time.ElapsedMilliseconds);
 
 					//Resetowanie stopera
 					Time.Reset();
-
-					//Dodanie wyniku do listy wyników czasowych
-					_oTimesList.Add(_lTimeSum);
 				}
 
 				//Sortowanie tablicy wyników czasowych
@@ -302,7 +310,7 @@ namespace Projekt1_Wyszukiwanie
 				_lAverage /= _oTimesList.Count;
 
 				//Wyświetlenie statystyk
-				Console.WriteLine($"{i * 1000000}\t\t{_lAverage}\t\t{_iCouter++}");//Testowo licznik pętli - Couter
+				Console.WriteLine($"{i * 1000000}\t\t{_lAverage}\t\t{++_iCouter}");//Testowo licznik pętli - Couter
 			}
 		}
 
@@ -318,37 +326,34 @@ namespace Projekt1_Wyszukiwanie
 			Liniowe liniowe = new Liniowe();
 
 			//Testowo licznik pętli
-			int _iCouter = 1;
+			int _iCouter = 0;
 
 			//Pętla po punktach pomiarowych
 			for (int i = 2; i <= 280; i += 4)//70 punktów pomiarowych
 			{
 				//Tworzenie tablic o podanej wielkości
-				int[] _oMatrix = CreateMatrix(i * 1000000, int.MaxValue - 1);//Wraz ze sztywno określoną ostatnią wartośćia w tablicy
+				int[] _oMatrix = CreateMatrix(i * 1000000, int.MaxValue - 1);
 
 				//Sprawdzenie wartości peirwszego elementu w tablicy
 				int _iFirstNumber = _oMatrix[0];
 
-				//Zmienna przechowująca ilosć punktów krytycznych
-				long _lCriticalPoints = 0;
-
 				//Zmienna przechowująca sumę punktów pomiaroywch między przypadkiem optymistycznym a pesymistycznym
 				long _lCriticalPointsSum = 0;
 
-				//Szukanie pierwszego elementu
-				liniowe.LinSearchInst(_oMatrix, _iFirstNumber, out _lCriticalPoints);
+				//Szukanie pierwszego elementu liniowo
+				liniowe.LinSearchInst(_oMatrix, _iFirstNumber, out long _lCriticalPoints);//Zmienna przechowująca ilosć punktów krytycznych
 
 				//Sumowanie punktów krytycznych
 				_lCriticalPointsSum += _lCriticalPoints;
 
-				//Szukanie ostatniego elementu
+				//Szukanie ostatniego elementu liniowo
 				liniowe.LinSearchInst(_oMatrix, int.MaxValue, out _lCriticalPoints);
 
 				//Sumowanie punktów krytycznych
 				_lCriticalPointsSum += _lCriticalPoints;
 
 				//Wyświetlenie statystyk
-				Console.WriteLine($"{i * 1000000}\t\t{_lCriticalPointsSum / 2}\t\t{_iCouter++}");//Testowo licznik pętli - Couter
+				Console.WriteLine($"{i * 1000000}\t\t{_lCriticalPointsSum / 2}\t\t{++_iCouter}");//Testowo licznik pętli - Couter
 			}
 		}
 
@@ -364,7 +369,7 @@ namespace Projekt1_Wyszukiwanie
 			Liniowe liniowe = new Liniowe();
 
 			//Testowo licznik pętli
-			int _iCouter = 1;
+			int _iCouter = 0;
 
 			//Pętla po punktach pomiarowych
 			for (int i = 2; i <= 280; i += 4)//70 punktów pomiarowych
@@ -372,14 +377,11 @@ namespace Projekt1_Wyszukiwanie
 				//Tworzenie tablic o podanej wielkości
 				int[] _oMatrix = CreateMatrix(i * 1000000, int.MaxValue - 1);
 
-				//Zmienna przechowująca ilosć punktów krytycznych
-				long _lCriticalPoints = 0;
-
-				//Szukanie elementu o wartości 100
-				liniowe.LinSearchInst(_oMatrix, int.MaxValue, out _lCriticalPoints);
+				//Szukanie elementu liniowo
+				liniowe.LinSearchInst(_oMatrix, int.MaxValue, out long _lCriticalPoints);//Zmienna przechowująca ilosć punktów krytycznych
 
 				//Wyświetlenie statystyk
-				Console.WriteLine($"{i * 1000000}\t\t{_lCriticalPoints}\t\t{_iCouter++}");//Testowo licznik pętli - Couter
+				Console.WriteLine($"{i * 1000000}\t\t{_lCriticalPoints}\t\t{++_iCouter}");//Testowo licznik pętli - Couter
 			}
 		}
 
@@ -398,13 +400,13 @@ namespace Projekt1_Wyszukiwanie
 			Liniowe liniowe = new Liniowe();
 
 			//Testowo licznik pętli
-			int _iCouter = 1;
+			int _iCouter = 0;
 
 			//Pętla po punktach pomiarowych
 			for (int i = 2; i <= 280; i += 4)//70 punktów pomiarowych
 			{
 				//Tworzenie tablic o podanej wielkości
-				int[] _oMatrix = CreateMatrix(i * 1000000, int.MaxValue - 1);//Wraz ze sztywno określoną ostatnią wartośćia w tablicy
+				int[] _oMatrix = CreateMatrix(i * 1000000, int.MaxValue - 1);
 
 				//Sprawdzenie wartości peirwszego elementu w tablicy
 				int _iFirstNumber = _oMatrix[0];
@@ -412,17 +414,20 @@ namespace Projekt1_Wyszukiwanie
 				//Tworzenie listy wyników czasowych
 				List<long> _oTimesList = new List<long>();
 
-				//Zmienna przechowująca sumę czasów między przypadkiem optymistycznym a pesymistycznym
-				long _lTimeSum = 0;
-
 				//Uśrednienie wyniku
-				for (int x = 0; x < 7; x++)//7 prób
+				for (int x = 0; x < 10; x++)//10 prób
 				{
+					//Zmienna przechowująca sumę czasów między przypadkiem optymistycznym a pesymistycznym
+					long _lTimeSum = 0;
+
 					//Rozpoczecie pomiaru czasu
 					Time.Start();
 
-					//Szukanie pierwszego elementu
+					//Szukanie pierwszego elementu liniowo
 					liniowe.LinSearchTime(_oMatrix, _iFirstNumber);
+
+					//Pomiar czasu
+					Time.Stop();
 
 					//Sumowanie czasów
 					_lTimeSum += Time.ElapsedMilliseconds;
@@ -430,8 +435,11 @@ namespace Projekt1_Wyszukiwanie
 					//Resetowanie stopera
 					Time.Restart();
 
-					//Szukanie ostatniego elementu
-					liniowe.LinSearchTime(_oMatrix, int.MaxValue);		
+					//Szukanie ostatniego elementu liniowo
+					liniowe.LinSearchTime(_oMatrix, int.MaxValue);
+
+					//Pomiar czasu
+					Time.Stop();
 
 					//Sumowanie czasów
 					_lTimeSum += Time.ElapsedMilliseconds;
@@ -463,7 +471,7 @@ namespace Projekt1_Wyszukiwanie
 				_lAverage /= _oTimesList.Count;
 
 				//Wyświetlenie statystyk
-				Console.WriteLine($"{i * 1000000}\t\t{_lAverage}\t\t{_iCouter++}");//Testowo licznik pętli - Couter
+				Console.WriteLine($"{i * 1000000}\t\t{_lAverage}\t\t{++_iCouter}");//Testowo licznik pętli - Couter
 			}
 		}
 
@@ -482,7 +490,7 @@ namespace Projekt1_Wyszukiwanie
 			Liniowe liniowe = new Liniowe();
 
 			//Testowo licznik pętli
-			int _iCouter = 1;
+			int _iCouter = 0;
 
 			//Pętla po punktach pomiarowych
 			for (int i = 2; i <= 280; i += 4)//70 punktów pomiarowych
@@ -493,26 +501,23 @@ namespace Projekt1_Wyszukiwanie
 				//Tworzenie listy wyników czasowych
 				List<long> _oTimesList = new List<long>();
 
-				//Zmienna przechowująca wynik czasowy
-				long _lTimeSum = 0;
-
 				//Uśrednienie wyniku
-				for (int x = 0; x < 7; x++)//7 prób
+				for (int x = 0; x < 10; x++)//10 prób
 				{
 					//Rozpoczecie pomiaru czasu
 					Time.Start();
 
-					//Szukanie elementu o wartości 100
+					//Szukanie elementu liniowo
 					liniowe.LinSearchTime(_oMatrix, int.MaxValue);
 
 					//Pomiar czasu
-					_lTimeSum += Time.ElapsedMilliseconds;
+					Time.Stop();
+
+					//Dodanie wyniku do listy wyników czasowych
+					_oTimesList.Add(Time.ElapsedMilliseconds);
 
 					//Resetowanie stopera
 					Time.Reset();
-
-					//Dodanie wyniku do listy wyników czasowych
-					_oTimesList.Add(_lTimeSum);
 				}
 
 				//Sortowanie tablicy wyników czasowych
@@ -535,7 +540,7 @@ namespace Projekt1_Wyszukiwanie
 				_lAverage /= _oTimesList.Count;
 
 				//Wyświetlenie statystyk
-				Console.WriteLine($"{i * 1000000}\t\t{_lAverage}\t\t{_iCouter++}");//Testowo licznik pętli - Couter
+				Console.WriteLine($"{i * 1000000}\t\t{_lAverage}\t\t{++_iCouter}");//Testowo licznik pętli - Couter
 			}
 		}
 
@@ -548,7 +553,7 @@ namespace Projekt1_Wyszukiwanie
 			Console.Title = "Algorytmy przeszukujące";
 
 			#endregion
-
+			
 			
 			Lin_Pes_Time();
 			Lin_Ave_Time();

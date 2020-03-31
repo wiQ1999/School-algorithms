@@ -38,7 +38,7 @@
 				}
 			}
 
-			return 0;
+			return -1;
 		}
 
 		/// <summary>
@@ -64,7 +64,7 @@
 					_uLeft = _uCenter + 1;
 			}
 
-			return 0;
+			return -1;
 		}
 	}
 }

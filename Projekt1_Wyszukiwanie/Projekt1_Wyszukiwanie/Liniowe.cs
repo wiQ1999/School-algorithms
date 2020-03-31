@@ -18,7 +18,7 @@
 					return a_uSearchingNumber;
 			}
 
-			return 0;
+			return -1;
 		}
 
 		/// <summary>
@@ -35,7 +35,7 @@
 					
 			}
 
-			return 0;
+			return -1;
 		}
 	}
 }
