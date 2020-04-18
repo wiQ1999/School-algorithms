@@ -8,6 +8,9 @@ namespace Projekt2_Liczby_Pierwsze
 {
 	class Program
 	{
+		/// <summary>
+		/// List of prime numbers selected for this project
+		/// </summary>
 		public static List<BigInteger> PrimeNumbers = new List<BigInteger>() { 100913, 1009139, 10091401, 100914061, 1009140611, 10091406133, 100914061337, 1009140613399 };
 
 		#region Methods
@@ -37,18 +40,18 @@ namespace Projekt2_Liczby_Pierwsze
 
 		#region PrimeMethods
 
-		static bool IsPrime(BigInteger a_ulNumber)
+		static bool IsPrime(BigInteger a_iNumber)
 		{
-			if (a_ulNumber < 2) return false;
-			else if (a_ulNumber < 4) return true;
+			if (a_iNumber < 2) return false;
+			else if (a_iNumber < 4) return true;
 			else
 			{
-				if (a_ulNumber % 2 == 0) return false;
+				if (a_iNumber % 2 == 0) return false;
 				else
 				{
-					for (BigInteger u = 3; u < a_ulNumber / 2; u += 2)
+					for (BigInteger u = 3; u < a_iNumber / 2; u += 2)
 					{
-						if (a_ulNumber % u == 0) return false;
+						if (a_iNumber % u == 0) return false;
 					}
 				}
 			}
@@ -56,64 +59,22 @@ namespace Projekt2_Liczby_Pierwsze
 			return true;
 		}
 
-		static bool IsPrime(BigInteger a_ulNumber, out ulong _ulCriticalPoints)
-		{
-			_ulCriticalPoints = 0;//Zmienna puktów krytycznych
-
-			if (a_ulNumber < 2) return false;
-			else if (a_ulNumber < 4) return true;
-			else
-			{
-				_ulCriticalPoints++;//Dodanie punktu krytycznego
-				if (a_ulNumber % 2 == 0) return false;
-				else
-				{
-					for (BigInteger u = 3; u < a_ulNumber / 2; u += 2)
-					{
-						_ulCriticalPoints++;//Dodanie punktu krytycznego
-						if (a_ulNumber % u == 0) return false;
-					}
-				}
-			}
-
-			return true;
-		}
-
-		static bool IsPrimePositive(BigInteger a_ulNumber)
-		{
-			if (a_ulNumber < 2) return false;
-			else if (a_ulNumber < 4) return true;
-			else
-			{
-				if (a_ulNumber % 2 == 0) return false;
-				else
-				{
-					for (BigInteger u = 3; u <= (BigInteger)Math.Sqrt((double)a_ulNumber); u += 2)
-					{
-						if (a_ulNumber % u == 0) return false;
-					}
-				}
-			}
-
-			return true;
-		}
-
-		static bool IsPrimePositive(BigInteger a_ulNumber, out ulong _ulCriticalPoints)
+		static bool IsPrime(BigInteger a_iNumber, out ulong _ulCriticalPoints)
 		{
 			_ulCriticalPoints = 0;//Zmienna puktów krytycznych
 
-			if (a_ulNumber < 2) return false;
-			else if (a_ulNumber < 4) return true;
+			if (a_iNumber < 2) return false;
+			else if (a_iNumber < 4) return true;
 			else
 			{
 				_ulCriticalPoints++;//Dodanie punktu krytycznego
-				if (a_ulNumber % 2 == 0) return false;
+				if (a_iNumber % 2 == 0) return false;
 				else
 				{
-					for (BigInteger u = 3; u <= (BigInteger)Math.Sqrt((double)a_ulNumber); u += 2)
+					for (BigInteger u = 3; u < a_iNumber / 2; u += 2)
 					{
 						_ulCriticalPoints++;//Dodanie punktu krytycznego
-						if (a_ulNumber % u == 0) return false;
+						if (a_iNumber % u == 0) return false;
 					}
 				}
 			}
@@ -121,6 +82,111 @@ namespace Projekt2_Liczby_Pierwsze
 			return true;
 		}
 
+		static bool IsPrimePositive(BigInteger a_iNumber)
+		{
+			if (a_iNumber < 2) return false;
+			else if (a_iNumber < 4) return true;
+			else
+			{
+				if (a_iNumber % 2 == 0) return false;
+				else
+				{
+					for (BigInteger u = 3; u * u <= a_iNumber; u += 2)
+					{
+						if (a_iNumber % u == 0) return false;
+					}
+				}
+			}
+
+			return true;
+		}
+
+		static bool IsPrimePositive(BigInteger a_iNumber, out ulong _ulCriticalPoints)
+		{
+			_ulCriticalPoints = 0;//Zmienna puktów krytycznych
+
+			if (a_iNumber < 2) return false;
+			else if (a_iNumber < 4) return true;
+			else
+			{
+				_ulCriticalPoints++;//Dodanie punktu krytycznego
+				if (a_iNumber % 2 == 0) return false;
+				else
+				{
+					for (BigInteger u = 3; u <= (BigInteger)Math.Sqrt((double)a_iNumber); u += 2)
+					{
+						_ulCriticalPoints++;//Dodanie punktu krytycznego
+						if (a_iNumber % u == 0) return false;
+					}
+				}
+			}
+
+			return true;
+		}
+
+		static bool IsPrimeOptimal(BigInteger a_iNumber)
+		{
+			if (a_iNumber < 2) return false;
+			if (a_iNumber > 3)
+			{
+				if (a_iNumber % 2 == 0) return false;
+				if (a_iNumber % 3 == 0) return false;
+
+				BigInteger p = 2, k = 1;
+				sbyte d = -1;
+
+				while(p * p <= a_iNumber)
+				{
+					p = 6 * k + d;
+
+					if (d == 1)
+					{
+						d = -1;
+						k++;
+					}
+					else d = 1;
+
+					if (a_iNumber % p == 0) return false;
+				}
+			}
+
+			return true;
+		}
+
+		static bool IsPrimeOptimal(BigInteger a_iNumber, out ulong _ulCriticalPoints)
+		{
+			_ulCriticalPoints = 0;//Zmienna puktów krytycznych
+
+			if (a_iNumber < 2) return false;
+			if (a_iNumber > 3)
+			{
+				_ulCriticalPoints++;//Dodanie punktu krytycznego
+				if (a_iNumber % 2 == 0) return false;
+				_ulCriticalPoints++;//Dodanie punktu krytycznego
+				if (a_iNumber % 3 == 0) return false;
+
+				BigInteger p = 2, k = 1;
+				sbyte d = -1;
+
+				while (p * p <= a_iNumber)
+				{
+					p = 6 * k + d;
+
+					if (d == 1)
+					{
+						d = -1;
+						k++;
+					}
+					else d = 1;
+
+					_ulCriticalPoints++;//Dodanie punktu krytycznego
+					if (a_iNumber % p == 0) return false;
+				}
+			}
+
+			return true;
+		}
+		
 		#endregion
 
 		#region MainMethods
@@ -245,7 +311,65 @@ namespace Projekt2_Liczby_Pierwsze
 			}
 		}
 
+		static void PrimeNumbersOptimalTime()
+		{
+			//Opis metody w konsoli
+			Console.WriteLine("PrimeNumbersOptimalTime");
 
+			//Opis kolumn
+			Console.WriteLine("Number\tTime/Points\t");
+
+			//Deklaracja stopera
+			Stopwatch stopwatch = new Stopwatch();
+
+			//Lista przechowująca pomiary czasowe
+			List<long> _oTimesList = new List<long>();
+
+			//Petla po liście z numerami pierwszymi
+			foreach (BigInteger prime in PrimeNumbers)
+			{
+				//Petla uśredniająca wynik czasowy
+				for (int x = 0; x < 10; x++)//10 pomiarów jednej liczby
+				{
+					//Zresetowanie stopera i rozpoczącie pomiaru
+					stopwatch.Restart();
+
+					//Metoda sprawdzająca liczbę pierwszą
+					IsPrimeOptimal(prime);
+
+					//Pomiar czasu
+					stopwatch.Stop();
+
+					//Dodanie wyniku do listy czasów
+					_oTimesList.Add(stopwatch.ElapsedMilliseconds);
+				}
+
+				//Zmienna przechowująca średnią czasową dla jednej liczy pierwszej
+				long _lTimeAverage = CountAverage(_oTimesList);//Funkcja oblcizająca średnią czasową
+
+				//Wypisanie wyniku na tablicy
+				Console.WriteLine($"{prime}\t{_lTimeAverage}");
+			}
+		}
+
+		static void PrimeNumbersOptimalInstrumentation()
+		{
+			//Opis metody w konsoli
+			Console.WriteLine("PrimeNumbersOptimalInstrumentation");
+
+			//Opis kolumn
+			Console.WriteLine("Number\tTime/Points\t");
+
+			//Petla po liście z numerami pierwszymi
+			foreach (BigInteger prime in PrimeNumbers)
+			{
+				//Metoda sprawdzająca liczbę pierwszą
+				IsPrimeOptimal(prime, out ulong _ulCriticalPoints);//Zmienna przechowująca ilość punktów krytycznych
+
+				//Wypisanie wyniku na tablicy
+				Console.WriteLine($"{prime}\t{_ulCriticalPoints}");
+			}
+		}
 
 		#endregion
 
@@ -258,16 +382,16 @@ namespace Projekt2_Liczby_Pierwsze
 			//PrimeNumbersInstrumentation();
 
 			//Pozytywna metoda szukanai liczb pierwszych - pomiar czasu
-			//PrimeNumbersPositiveTime();
+			PrimeNumbersPositiveTime();
 
 			//Pozytywna metoda szukanai liczb pierwszych - instrumentacja
-			//PrimeNumbersPositiveInstrumentation();
+			PrimeNumbersPositiveInstrumentation();
 
 			//Optymalna metoda szukania liczb pierwszych - pomiar czasu
-
+			PrimeNumbersOptimalTime();
 
 			//Optymalna metoda szukania liczb pierwszych - instrumentacja
-
+			PrimeNumbersOptimalInstrumentation();
 
 		}
 	}
