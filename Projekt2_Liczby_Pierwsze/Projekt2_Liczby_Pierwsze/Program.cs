@@ -124,69 +124,103 @@ namespace Projekt2_Liczby_Pierwsze
 			return true;
 		}
 
-		static bool IsPrimeOptimal(BigInteger a_iNumber)
+		static bool IsPrimeSito6(BigInteger a_iNumber)
 		{
-			if (a_iNumber < 2) return false;
-			if (a_iNumber > 3)
+			if (a_iNumber < 11)
+			{
+				if (a_iNumber != 2 && a_iNumber != 3 && a_iNumber != 5 && a_iNumber != 7) return false;
+			}
+			else
 			{
 				if (a_iNumber % 2 == 0) return false;
 				if (a_iNumber % 3 == 0) return false;
 
-				BigInteger p = 2, k = 1;
-				sbyte d = -1;
+				BigInteger prime = 0, k = 1;
 
-				while(p * p <= a_iNumber)
+				while (prime * prime <= a_iNumber)
 				{
-					p = 6 * k + d;
+					prime = 6 * k - 1;
+					if (a_iNumber % prime == 0) return false;
 
-					if (d == 1)
-					{
-						d = -1;
-						k++;
-					}
-					else d = 1;
+					prime = 6 * k + 1;
+					if (a_iNumber % prime == 0) return false;
 
-					if (a_iNumber % p == 0) return false;
+					k++;
 				}
 			}
 
 			return true;
 		}
 
-		static bool IsPrimeOptimal(BigInteger a_iNumber, out ulong _ulCriticalPoints)
+		static bool IsPrimeSito6(BigInteger a_iNumber, out ulong _ulCriticalPoints)
 		{
 			_ulCriticalPoints = 0;//Zmienna puktów krytycznych
 
-			if (a_iNumber < 2) return false;
-			if (a_iNumber > 3)
+			if (a_iNumber < 11)
+			{
+				if (a_iNumber != 2 && a_iNumber != 3 && a_iNumber != 5 && a_iNumber != 7) return false;
+			}
+			else
 			{
 				_ulCriticalPoints++;//Dodanie punktu krytycznego
 				if (a_iNumber % 2 == 0) return false;
 				_ulCriticalPoints++;//Dodanie punktu krytycznego
 				if (a_iNumber % 3 == 0) return false;
 
-				BigInteger p = 2, k = 1;
-				sbyte d = -1;
+				BigInteger prime = 0, k = 1;
 
-				while (p * p <= a_iNumber)
+				while (prime * prime <= a_iNumber)
 				{
-					p = 6 * k + d;
-
-					if (d == 1)
-					{
-						d = -1;
-						k++;
-					}
-					else d = 1;
-
+					prime = 6 * k - 1;
 					_ulCriticalPoints++;//Dodanie punktu krytycznego
-					if (a_iNumber % p == 0) return false;
+					if (a_iNumber % prime == 0) return false;
+
+					prime = 6 * k + 1;
+					_ulCriticalPoints++;//Dodanie punktu krytycznego
+					if (a_iNumber % prime == 0) return false;
+
+					k++;
 				}
 			}
 
 			return true;
 		}
-		
+
+		static bool IsPrimeDivisibility(BigInteger a_iNumber)
+		{
+			//Deklaracja zmiennych
+			BigInteger _iMod = -1, _iLength = 10, _iSum = 0, _iBy7 = 0;
+			uint _uPow = 0;
+
+			//Petla zczytujące koljne cyfry w liczbie
+			while (_iMod != a_iNumber)//Dopóki modulo z liczby mnożonej o 10 nie jest równy badanej liczbie
+			{
+				//Zczytanie cyfry z danego miejsca w liczbie
+				_iMod = a_iNumber % _iLength;
+
+				//Dodanie cyfry do sumy cyft badanej liczby
+				_iSum += _iMod / (_iLength / 10);
+				
+				//Badania podzielności 
+				if(_iLength == 10)//Pierwsza cyfra w badanej liczbie
+				{
+					if (_iMod % 2 == 0) return false;//Podzielne przez 2
+					if (_iMod % 5 == 0) return false;//Podzielne przez 5
+				}
+
+				//Sumowanie podzielności przez 7
+				_iBy7 += (BigInteger)Math.Pow((double)_iMod, _uPow++);//Zwiekszenie mocy potęgi o jeden
+
+				//przesunięcie na nastepną cyfrę
+				_iLength *= 10;
+			}
+
+			if (_iSum % 3 == 0) return false;//Podzielne przez 3
+			if (_iBy7 % 7 == 0) return false;//Podzielne przez 7
+
+			return true;
+		}
+
 		#endregion
 
 		#region MainMethods
@@ -311,65 +345,37 @@ namespace Projekt2_Liczby_Pierwsze
 			}
 		}
 
-		static void PrimeNumbersOptimalTime()
+		//TESTY
+		static void PrimeNumbersTEST()
 		{
-			//Opis metody w konsoli
-			Console.WriteLine("PrimeNumbersOptimalTime");
+			BigInteger Length = 1000;
 
-			//Opis kolumn
-			Console.WriteLine("Number\tTime/Points\t");
-
-			//Deklaracja stopera
-			Stopwatch stopwatch = new Stopwatch();
-
-			//Lista przechowująca pomiary czasowe
-			List<long> _oTimesList = new List<long>();
-
-			//Petla po liście z numerami pierwszymi
-			foreach (BigInteger prime in PrimeNumbers)
+			for (BigInteger i = 0; i < Length; i++)
 			{
-				//Petla uśredniająca wynik czasowy
-				for (int x = 0; x < 10; x++)//10 pomiarów jednej liczby
+				if (IsPrimePositive(i))
 				{
-					//Zresetowanie stopera i rozpoczącie pomiaru
-					stopwatch.Restart();
+					Console.WriteLine($"{i}\t{IsPrimeSito6(i)}");
+				}
+			}
+		}
 
-					//Metoda sprawdzająca liczbę pierwszą
-					IsPrimeOptimal(prime);
+		static void PrimeNumbersTEST2()
+		{
+			BigInteger counter = 0;
+			BigInteger zakres = 0;
 
-					//Pomiar czasu
-					stopwatch.Stop();
-
-					//Dodanie wyniku do listy czasów
-					_oTimesList.Add(stopwatch.ElapsedMilliseconds);
+			while(zakres < 100)
+			{
+				if (IsPrimeDivisibility(counter))
+				{
+					Console.Write(counter + ", ");
+					zakres++;
 				}
 
-				//Zmienna przechowująca średnią czasową dla jednej liczy pierwszej
-				long _lTimeAverage = CountAverage(_oTimesList);//Funkcja oblcizająca średnią czasową
-
-				//Wypisanie wyniku na tablicy
-				Console.WriteLine($"{prime}\t{_lTimeAverage}");
+				counter++;
 			}
 		}
 
-		static void PrimeNumbersOptimalInstrumentation()
-		{
-			//Opis metody w konsoli
-			Console.WriteLine("PrimeNumbersOptimalInstrumentation");
-
-			//Opis kolumn
-			Console.WriteLine("Number\tTime/Points\t");
-
-			//Petla po liście z numerami pierwszymi
-			foreach (BigInteger prime in PrimeNumbers)
-			{
-				//Metoda sprawdzająca liczbę pierwszą
-				IsPrimeOptimal(prime, out ulong _ulCriticalPoints);//Zmienna przechowująca ilość punktów krytycznych
-
-				//Wypisanie wyniku na tablicy
-				Console.WriteLine($"{prime}\t{_ulCriticalPoints}");
-			}
-		}
 
 		#endregion
 
@@ -382,17 +388,16 @@ namespace Projekt2_Liczby_Pierwsze
 			//PrimeNumbersInstrumentation();
 
 			//Pozytywna metoda szukanai liczb pierwszych - pomiar czasu
-			PrimeNumbersPositiveTime();
+			//PrimeNumbersPositiveTime();
 
 			//Pozytywna metoda szukanai liczb pierwszych - instrumentacja
-			PrimeNumbersPositiveInstrumentation();
+			//PrimeNumbersPositiveInstrumentation();
 
-			//Optymalna metoda szukania liczb pierwszych - pomiar czasu
-			PrimeNumbersOptimalTime();
 
-			//Optymalna metoda szukania liczb pierwszych - instrumentacja
-			PrimeNumbersOptimalInstrumentation();
+			
 
+			//TESTY
+			PrimeNumbersTEST2();
 		}
 	}
 }
