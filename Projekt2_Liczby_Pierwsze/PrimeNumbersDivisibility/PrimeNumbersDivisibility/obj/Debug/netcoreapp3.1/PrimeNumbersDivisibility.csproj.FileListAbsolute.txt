@@ -1,0 +1,13 @@
+E:\Programowanie\C#\Tests\PrimeNumbersDivisibility\PrimeNumbersDivisibility\bin\Debug\netcoreapp3.1\PrimeNumbersDivisibility.exe
+E:\Programowanie\C#\Tests\PrimeNumbersDivisibility\PrimeNumbersDivisibility\bin\Debug\netcoreapp3.1\PrimeNumbersDivisibility.deps.json
+E:\Programowanie\C#\Tests\PrimeNumbersDivisibility\PrimeNumbersDivisibility\bin\Debug\netcoreapp3.1\PrimeNumbersDivisibility.runtimeconfig.json
+E:\Programowanie\C#\Tests\PrimeNumbersDivisibility\PrimeNumbersDivisibility\bin\Debug\netcoreapp3.1\PrimeNumbersDivisibility.runtimeconfig.dev.json
+E:\Programowanie\C#\Tests\PrimeNumbersDivisibility\PrimeNumbersDivisibility\bin\Debug\netcoreapp3.1\PrimeNumbersDivisibility.dll
+E:\Programowanie\C#\Tests\PrimeNumbersDivisibility\PrimeNumbersDivisibility\bin\Debug\netcoreapp3.1\PrimeNumbersDivisibility.pdb
+E:\Programowanie\C#\Tests\PrimeNumbersDivisibility\PrimeNumbersDivisibility\obj\Debug\netcoreapp3.1\PrimeNumbersDivisibility.csprojAssemblyReference.cache
+E:\Programowanie\C#\Tests\PrimeNumbersDivisibility\PrimeNumbersDivisibility\obj\Debug\netcoreapp3.1\PrimeNumbersDivisibility.csproj.CoreCompileInputs.cache
+E:\Programowanie\C#\Tests\PrimeNumbersDivisibility\PrimeNumbersDivisibility\obj\Debug\netcoreapp3.1\PrimeNumbersDivisibility.AssemblyInfoInputs.cache
+E:\Programowanie\C#\Tests\PrimeNumbersDivisibility\PrimeNumbersDivisibility\obj\Debug\netcoreapp3.1\PrimeNumbersDivisibility.AssemblyInfo.cs
+E:\Programowanie\C#\Tests\PrimeNumbersDivisibility\PrimeNumbersDivisibility\obj\Debug\netcoreapp3.1\PrimeNumbersDivisibility.dll
+E:\Programowanie\C#\Tests\PrimeNumbersDivisibility\PrimeNumbersDivisibility\obj\Debug\netcoreapp3.1\PrimeNumbersDivisibility.pdb
+E:\Programowanie\C#\Tests\PrimeNumbersDivisibility\PrimeNumbersDivisibility\obj\Debug\netcoreapp3.1\PrimeNumbersDivisibility.genruntimeconfig.cache
