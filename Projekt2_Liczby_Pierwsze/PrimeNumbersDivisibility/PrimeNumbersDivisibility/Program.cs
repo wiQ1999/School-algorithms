@@ -159,7 +159,7 @@ namespace PrimeNumbersDivisibility
 			return true;
 		}
 
-		static bool Sito6(BigInteger a_iNumber)
+		static bool Div(BigInteger a_iNumber)
 		{
 			if (a_iNumber < 11)
 			{
@@ -187,7 +187,7 @@ namespace PrimeNumbersDivisibility
 			return true;
 		}
 
-		static bool Sito61(BigInteger a_iNumber)
+		static bool Div1(BigInteger a_iNumber)
 		{
 			if (a_iNumber < 2) return false;
 			else if (a_iNumber < 4) return true;
@@ -214,7 +214,7 @@ namespace PrimeNumbersDivisibility
 			return true;
 		}
 
-		static bool Sito62(BigInteger a_iNumber)
+		static bool Div2(BigInteger a_iNumber)
 		{
 			if (a_iNumber < 2) return false;
 			else if (a_iNumber < 4 || a_iNumber == 5 || a_iNumber == 7) return true;
@@ -240,7 +240,7 @@ namespace PrimeNumbersDivisibility
 			return true;
 		}
 
-		static bool Sito63(BigInteger a_iNumber)
+		static bool Div3(BigInteger a_iNumber)
 		{
 			if (a_iNumber < 2) return false;
 			else if (a_iNumber < 4 || a_iNumber == 5 || a_iNumber == 7) return true;
@@ -250,16 +250,19 @@ namespace PrimeNumbersDivisibility
 				if (a_iNumber % 3 == 0) return false;
 
 				BigInteger prime = 0, k = 1;
+				sbyte d = -1;
 
 				while (prime * prime <= a_iNumber)
 				{
-					prime = 6 * k - 1;
+					prime = 6 * k + d;
 					if (a_iNumber % prime == 0) return false;
 
-					prime = 6 * k + 1;
-					if (a_iNumber % prime == 0) return false;
-
-					k++;
+					if (d == 1)
+					{
+						d = -1;
+						k++;
+					}
+					else d = 1;
 				}
 			}
 
@@ -295,7 +298,7 @@ namespace PrimeNumbersDivisibility
 			return true;
 		}
 
-		static bool Sito6Divi0(BigInteger a_iNumber)
+		static bool Divi30(BigInteger a_iNumber)
 		{
 			if (a_iNumber < 10)
 			{
@@ -331,7 +334,7 @@ namespace PrimeNumbersDivisibility
 			return true;
 		}
 
-		static bool Sito6Divi03(BigInteger a_iNumber)
+		static bool Divi303(BigInteger a_iNumber)
 		{
 			if (a_iNumber < 10)
 			{
@@ -379,7 +382,7 @@ namespace PrimeNumbersDivisibility
 			return true;
 		}
 
-		static bool Sito6Divi2(BigInteger a_iNumber)
+		static bool Divi32(BigInteger a_iNumber)
 		{
 			if(a_iNumber < 10)
 			{
@@ -415,7 +418,7 @@ namespace PrimeNumbersDivisibility
 			return true;
 		}
 
-		static bool Sito6Divi235(BigInteger a_iNumber)
+		static bool Divi3235(BigInteger a_iNumber)
 		{
 			if (a_iNumber < 10)
 			{
@@ -428,7 +431,8 @@ namespace PrimeNumbersDivisibility
 			{
 				BigInteger _iMod = a_iNumber % 10;
 
-				if (_iMod % 2 == 0 || _iMod % 5 == 0) return false;
+				if (_iMod % 2 == 0) return false;
+				if (_iMod % 5 == 0) return false;
 
 				BigInteger _iModSum = _iMod;
 				BigInteger _iNuller = 100;
@@ -444,26 +448,27 @@ namespace PrimeNumbersDivisibility
 
 				if (_iModSum % 3 == 0) return false;
 
-				BigInteger p = 0, k = 1;
+				BigInteger prime = 0, k = 1;
+				sbyte d = -1;
 
-				while (p * p <= a_iNumber)
+				while (prime * prime <= a_iNumber)
 				{
-					p = 6 * k - 1;
+					prime = 6 * k + d;
+					if (a_iNumber % prime == 0) return false;
 
-					if (a_iNumber % p == 0) return false;
-
-					p = 6 * k + 1;
-
-					if (a_iNumber % p == 0) return false;
-
-					k++;
+					if (d == 1)
+					{
+						d = -1;
+						k++;
+					}
+					else d = 1;
 				}
 			}
 
 			return true;
 		}
 
-		static BigInteger Sito6Divi235Return(BigInteger a_iNumber)
+		static BigInteger Divi3235Return(BigInteger a_iNumber)
 		{
 
 			BigInteger _iMod = a_iNumber % 10;
@@ -503,7 +508,7 @@ namespace PrimeNumbersDivisibility
 			return a_iNumber;
 		}
 
-		static bool Sito6Divi25(BigInteger a_iNumber)
+		static bool Divi325(BigInteger a_iNumber)
 		{
 			if (a_iNumber < 10)
 			{
@@ -541,7 +546,7 @@ namespace PrimeNumbersDivisibility
 			return true;
 		}
 
-		static bool Sito6Divi25v2(BigInteger a_iNumber)
+		static bool Divi325v2(BigInteger a_iNumber)
 		{
 			if (a_iNumber < 10)
 			{
@@ -756,6 +761,77 @@ namespace PrimeNumbersDivisibility
 			}
 		}
 
+		static bool Divi3235Only(BigInteger a_iNumber)
+		{
+			if (a_iNumber < 2) return false;
+			else if (a_iNumber < 4 || a_iNumber == 5) return true;
+			else
+			{
+				BigInteger _iMod = a_iNumber % 10;
+
+				if (_iMod % 2 == 0 || _iMod % 5 == 0) return false;
+
+				BigInteger _iModSum = _iMod;
+				BigInteger _iNuller = 100;
+				int _iModOne;
+
+				while (_iMod != a_iNumber)
+				{
+					_iMod = a_iNumber % _iNuller;
+					_iModOne = (int)(_iMod / (_iNuller / 10));
+					_iNuller *= 10;
+					_iModSum += _iModOne;
+				}
+
+				if (_iModSum % 3 == 0) return false;
+
+				for (BigInteger u = 3; u * u <= a_iNumber; u += 2)
+				{
+					if (a_iNumber % u == 0) return false;
+				}
+
+				return true;
+			}
+		}
+
+		static bool Erastotenes(BigInteger a_iNumber)
+		{
+			//natychmiastowe zwrócenie fałszu jeżeli szukana jest mniejsza od liczby 2
+			if (a_iNumber < 2) return false;
+
+			//deklaracja zmiennych
+			int _iRangeSqrt = (int)(Math.Sqrt((double)a_iNumber));
+			int[] _oTab = new int[_iRangeSqrt - 1];
+
+			//inicjuj tablice
+			for (int i = 2; i <= _iRangeSqrt; i++) _oTab[i - 2] = i;
+
+			//algorytm - sito eratostenesa
+			for (int i = 2; i < _iRangeSqrt; i++)//pętla po liczbach a nie indeksach
+			{
+				if (_oTab[i - 2] != 0)//jeżeli wartość w tablicy nie jest zerem
+				{
+					int j = i + i;//zmienna pomocnicza wielokrotności liczbowej
+					while (j <= _iRangeSqrt)//dopóki wielokrotnośc jest mniejsza lub równa pierwiastka z szukanej lcizby
+					{
+						_oTab[j - 2] = 0;//wyzerowanie liczby, która jest wielokrotnością
+						j += i;//dodanie wielkrotności
+					}
+				}
+			}
+
+			//wynik
+			for (int i = 0; i < _iRangeSqrt - 1; i++)
+			{
+				if (_oTab[i] != 0)//jeżeli liczba nie jest zerem
+				{
+					if (a_iNumber % _oTab[i] == 0) return false;//podzielność
+				}
+			}
+
+			return true;
+		}
+
 		#endregion
 
 		#region Methods
@@ -781,14 +857,13 @@ namespace PrimeNumbersDivisibility
 			return _lTimeSum / a_oTimeList.Count;
 		}
 
-
 		static void ShowPrimes()
 		{
-			BigInteger _iStart = 0, _iLicznik = 0, _iZakres = 10000;
+			BigInteger _iStart = 0, _iLicznik = 0, _iZakres = 100;
 
 			while(_iLicznik < _iZakres)
 			{
-				if (Dictionary1(_iStart))
+				if (Erastotenes(_iStart))
 				{
 					Console.Write($"{_iStart}, ");
 
@@ -820,7 +895,7 @@ namespace PrimeNumbersDivisibility
 						{
 							stopwatch.Restart();
 
-							Sito6Divi25(j);
+							Divi325(j);
 
 							stopwatch.Stop();
 
@@ -855,7 +930,7 @@ namespace PrimeNumbersDivisibility
 					stopwatch.Restart();
 					for (BigInteger i = x; i <= x + _iIle; i++)////100 liczb
 					{
-						Sito6Divi0(i);
+						Divi30(i);
 					}
 					stopwatch.Stop();
 					_oTimes.Add(stopwatch.ElapsedMilliseconds);
@@ -869,7 +944,7 @@ namespace PrimeNumbersDivisibility
 					stopwatch.Restart();
 					for (BigInteger i = x; i <= x + _iIle; i++)////100 liczb
 					{
-						Sito6Divi03(i);
+						Divi303(i);
 					}
 					stopwatch.Stop();
 					_oTimes.Add(stopwatch.ElapsedMilliseconds);
@@ -883,7 +958,7 @@ namespace PrimeNumbersDivisibility
 					stopwatch.Restart();
 					for (BigInteger i = x; i <= x + _iIle; i++)////100 liczb
 					{
-						Sito6Divi2(i);
+						Divi32(i);
 					}
 					stopwatch.Stop();
 					_oTimes.Add(stopwatch.ElapsedMilliseconds);
@@ -897,7 +972,7 @@ namespace PrimeNumbersDivisibility
 					stopwatch.Restart();
 					for (BigInteger i = x; i <= x + _iIle; i++)////100 liczb
 					{
-						Sito6Divi235(i);
+						Divi3235(i);
 					}
 					stopwatch.Stop();
 					_oTimes.Add(stopwatch.ElapsedMilliseconds);
@@ -911,7 +986,7 @@ namespace PrimeNumbersDivisibility
 					stopwatch.Restart();
 					for (BigInteger i = x; i <= x + _iIle; i++)////100 liczb
 					{
-						Sito6Divi25(i);
+						Divi325(i);
 					}
 					stopwatch.Stop();
 					_oTimes.Add(stopwatch.ElapsedMilliseconds);
@@ -929,7 +1004,25 @@ namespace PrimeNumbersDivisibility
 			BigInteger _iOd = 1;
 			BigInteger _iDo = 1000000000000000000;
 			int _iIle = 100;
-			
+
+			//Divi3235Only
+			Console.WriteLine("Divi3235Only");
+			for (BigInteger x = _iOd; x <= _iDo; x *= 10)//Następne wielkości liczb
+			{
+				List<long> _oTimes = new List<long>();
+				for (int j = 0; j < 5; j++)//5 prób
+				{
+					stopwatch.Restart();
+					for (BigInteger i = x; i <= x + _iIle; i++)////100 liczb
+					{
+						Divi3235Only(i);
+					}
+					stopwatch.Stop();
+					_oTimes.Add(stopwatch.ElapsedMilliseconds);
+				}
+				Console.WriteLine(CountAverage(_oTimes));
+			}
+			/*
 			//Dictionary1
 			Console.WriteLine("Dictionary1");
 			for (BigInteger x = _iOd; x <= _iDo; x *= 10)//Następne wielkości liczb
@@ -984,8 +1077,8 @@ namespace PrimeNumbersDivisibility
 				Console.WriteLine(CountAverage(_oTimes));
 			}
 			
-			//Sito6Divi25v2
-			Console.WriteLine("Sito6Divi25v2");
+			//Divi325v2
+			Console.WriteLine("Divi325v2");
 			for (BigInteger x = _iOd; x <= _iDo; x *= 10)//Następne wielkości liczb
 			{
 				List<long> _oTimes = new List<long>();
@@ -994,7 +1087,7 @@ namespace PrimeNumbersDivisibility
 					stopwatch.Restart();
 					for (BigInteger i = x; i <= x + _iIle; i++)////100 liczb
 					{
-						Sito6Divi25v2(i);
+						Divi325v2(i);
 					}
 					stopwatch.Stop();
 					_oTimes.Add(stopwatch.ElapsedMilliseconds);
@@ -1002,8 +1095,8 @@ namespace PrimeNumbersDivisibility
 				Console.WriteLine(CountAverage(_oTimes));
 			}
 			
-			//Sito6Divi25
-			Console.WriteLine("Sito6Divi25");
+			//Divi325
+			Console.WriteLine("Divi325");
 			for (BigInteger x = _iOd; x <= _iDo; x *= 10)//Następne wielkości liczb
 			{
 				List<long> _oTimes = new List<long>();
@@ -1012,7 +1105,7 @@ namespace PrimeNumbersDivisibility
 					stopwatch.Restart();
 					for (BigInteger i = x; i <= x + _iIle; i++)////100 liczb
 					{
-						Sito6Divi25(i);
+						Divi325(i);
 					}
 					stopwatch.Stop();
 					_oTimes.Add(stopwatch.ElapsedMilliseconds);
@@ -1020,8 +1113,8 @@ namespace PrimeNumbersDivisibility
 				Console.WriteLine(CountAverage(_oTimes));
 			}
 			
-			//Sito6Divi235
-			Console.WriteLine("Sito6Divi235");
+			//Divi3235
+			Console.WriteLine("Divi3235");
 			for (BigInteger x = _iOd; x <= _iDo; x *= 10)//Następne wielkości liczb
 			{
 				List<long> _oTimes = new List<long>();
@@ -1030,7 +1123,7 @@ namespace PrimeNumbersDivisibility
 					stopwatch.Restart();
 					for (BigInteger i = x; i <= x + _iIle; i++)////100 liczb
 					{
-						Sito6Divi235(i);
+						Divi3235(i);
 					}
 					stopwatch.Stop();
 					_oTimes.Add(stopwatch.ElapsedMilliseconds);
@@ -1038,8 +1131,8 @@ namespace PrimeNumbersDivisibility
 				Console.WriteLine(CountAverage(_oTimes));
 			}
 
-			//Sito6Divi2
-			Console.WriteLine("Sito6Divi2");
+			//Divi32
+			Console.WriteLine("Divi32");
 			for (BigInteger x = _iOd; x <= _iDo; x *= 10)//Następne wielkości liczb
 			{
 				List<long> _oTimes = new List<long>();
@@ -1048,7 +1141,7 @@ namespace PrimeNumbersDivisibility
 					stopwatch.Restart();
 					for (BigInteger i = x; i <= x + _iIle; i++)////100 liczb
 					{
-						Sito6Divi2(i);
+						Divi32(i);
 					}
 					stopwatch.Stop();
 					_oTimes.Add(stopwatch.ElapsedMilliseconds);
@@ -1056,8 +1149,8 @@ namespace PrimeNumbersDivisibility
 				Console.WriteLine(CountAverage(_oTimes));
 			}
 
-			//Sito6Divi03
-			Console.WriteLine("Sito6Divi03");
+			//Divi303
+			Console.WriteLine("Divi303");
 			for (BigInteger x = _iOd; x <= _iDo; x *= 10)//Następne wielkości liczb
 			{
 				List<long> _oTimes = new List<long>();
@@ -1066,7 +1159,7 @@ namespace PrimeNumbersDivisibility
 					stopwatch.Restart();
 					for (BigInteger i = x; i <= x + _iIle; i++)////100 liczb
 					{
-						Sito6Divi03(i);
+						Divi303(i);
 					}
 					stopwatch.Stop();
 					_oTimes.Add(stopwatch.ElapsedMilliseconds);
@@ -1074,8 +1167,8 @@ namespace PrimeNumbersDivisibility
 				Console.WriteLine(CountAverage(_oTimes));
 			}
 
-			//Sito6Divi0
-			Console.WriteLine("Sito6Divi0");
+			//Divi30
+			Console.WriteLine("Divi30");
 			for (BigInteger x = _iOd; x <= _iDo; x *= 10)//Następne wielkości liczb
 			{
 				List<long> _oTimes = new List<long>();
@@ -1084,14 +1177,14 @@ namespace PrimeNumbersDivisibility
 					stopwatch.Restart();
 					for (BigInteger i = x; i <= x + _iIle; i++)////100 liczb
 					{
-						Sito6Divi0(i);
+						Divi30(i);
 					}
 					stopwatch.Stop();
 					_oTimes.Add(stopwatch.ElapsedMilliseconds);
 				}
 				Console.WriteLine(CountAverage(_oTimes));
 			}
-			
+			*/
 		}
 
 		static void AlgorithmSpeedTest()
@@ -1147,7 +1240,7 @@ namespace PrimeNumbersDivisibility
 		{
 			for (BigInteger i = 10000000; i <= 11000000; i++)
 			{
-				Console.WriteLine($"{i}\t{Sito6Divi235Return(i)}");
+				Console.WriteLine($"{i}\t{Divi3235Return(i)}");
 			}
 		}
 
