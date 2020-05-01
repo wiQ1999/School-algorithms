@@ -50,7 +50,7 @@ namespace Projekt2_Liczby_Pierwsze
 			while(a_iQuantity >= 1)//Dopóki licznik liczb pierwszych nie zejdzie do 0
 			{
 				//Sprawdzenie pierwszości liczby
-				if (IsPrimeErastotenes(i))
+				if (IsPrimeEratotenes(i))
 				{
 					//Wypisanie na konsoli
 					Console.Write($"{i}, ");
@@ -403,7 +403,7 @@ namespace Projekt2_Liczby_Pierwsze
 			return true;
 		}
 
-		static bool IsPrimeErastotenes(BigInteger a_iNumber)
+		static bool IsPrimeEratotenes(BigInteger a_iNumber)
 		{
 			if (a_iNumber < 2) return false;
 
@@ -433,7 +433,7 @@ namespace Projekt2_Liczby_Pierwsze
 			return true;
 		}
 
-		static bool IsPrimeErastotenes(BigInteger a_iNumber, out ulong _ulCriticalPoints)
+		static bool IsPrimeEratotenes(BigInteger a_iNumber, out ulong _ulCriticalPoints)
 		{
 			_ulCriticalPoints = 0;//Zmienna puktów krytycznych
 
@@ -770,10 +770,10 @@ namespace Projekt2_Liczby_Pierwsze
 			}
 		}
 
-		static void PrimeNumbersErastotenesTime()
+		static void PrimeNumbersEratotenesTime()
 		{
 			//Opis metody w konsoli
-			Console.WriteLine("PrimeNumbersErastotenesTime");
+			Console.WriteLine("PrimeNumbersEratotenesTime");
 
 			//Opis kolumn
 			Console.WriteLine("Number\tTime/Points\t");
@@ -794,7 +794,7 @@ namespace Projekt2_Liczby_Pierwsze
 					stopwatch.Restart();
 
 					//Metoda sprawdzająca liczbę pierwszą
-					IsPrimeErastotenes(prime);
+					IsPrimeEratotenes(prime);
 
 					//Pomiar czasu
 					stopwatch.Stop();
@@ -811,10 +811,10 @@ namespace Projekt2_Liczby_Pierwsze
 			}
 		}
 
-		static void PrimeNumbersErastotenesInstrumentation()
+		static void PrimeNumbersEratotenesInstrumentation()
 		{
 			//Opis metody w konsoli
-			Console.WriteLine("PrimeNumbersErastotenesInstrumentation");
+			Console.WriteLine("PrimeNumbersEratotenesInstrumentation");
 
 			//Opis kolumn
 			Console.WriteLine("Number\tTime/Points\t");
@@ -823,7 +823,7 @@ namespace Projekt2_Liczby_Pierwsze
 			foreach (BigInteger prime in PrimeNumbers)
 			{
 				//Metoda sprawdzająca liczbę pierwszą
-				IsPrimeErastotenes(prime, out ulong _ulCriticalPoints);//Zmienna przechowująca ilość punktów krytycznych
+				IsPrimeEratotenes(prime, out ulong _ulCriticalPoints);//Zmienna przechowująca ilość punktów krytycznych
 
 				//Wypisanie wyniku na tablicy
 				Console.WriteLine($"{prime}\t{_ulCriticalPoints}");
@@ -988,11 +988,11 @@ namespace Projekt2_Liczby_Pierwsze
 			//Hybryda metod podzielności za pomocą wzoru p = 6 * k + d oraz podzielności przez 2,3 i 5 szukania liczb pierwszych - instrumentacja
 			//PrimeNumbersDivisibilityForm235Instrumentation();
 
-			//Metoda sita Erastotenesa szukania liczb pierwszych - pomiar czasu
-			//PrimeNumbersErastotenesTime();
+			//Metoda sita Eratotenesa szukania liczb pierwszych - pomiar czasu
+			//PrimeNumbersEratotenesTime();
 
-			//Metoda sita Erastotenesa szukania liczb pierwszych -instrumentacja
-			//PrimeNumbersErastotenesInstrumentation();
+			//Metoda sita Eratotenesa szukania liczb pierwszych -instrumentacja
+			//PrimeNumbersEratotenesInstrumentation();
 
 
 
@@ -1008,14 +1008,14 @@ namespace Projekt2_Liczby_Pierwsze
 			//TESTS
 			//ShowPrimes(100);
 
-			/*
-			Console.WriteLine("Numer\tP=6*K+D\tZasad.Podzielnosci");
+			
+			Console.WriteLine("Numer,\tP=6*K+D,\tZasad.Podzielnosci,\tP=6*K+D+Zasad.Podzielnosci,\tEratostenes");
 			BigInteger[] _oPrimeTest = new BigInteger[] { 13, 39, 77, 121 };
 			foreach (BigInteger prime in _oPrimeTest)
 			{
-				Console.WriteLine($"{prime}\t{IsPrimeDivisibilityForm(prime)}\t{IsPrimeDivisibility235(prime)}");
+				Console.WriteLine($"{prime}\t{IsPrimeDivisibilityForm(prime)}\t{IsPrimeDivisibility235(prime)}\t{IsPrimeDivisibilityForm235(prime)}\t{IsPrimeEratotenes(prime)}");
 			}
-			*/
+			
 		}
 	}
 }
