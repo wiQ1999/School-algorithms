@@ -403,20 +403,20 @@ namespace Projekt2_Liczby_Pierwsze
 			if (a_iNumber < 2) return false;
 
 			//deklaracja zmiennych
-			int _iRangeSqrt = (int)(Math.Sqrt((double)a_iNumber)) - 1;//pierwiastek z n - 1
-			int[] _oTab = new int[_iRangeSqrt];//nowa tablica
+			int _iRangeSqrt = (int)(Math.Sqrt((double)a_iNumber));//pierwiastek z n
+			int[] _oTab = new int[_iRangeSqrt - 1];//nowa tablica
 
 			//inicjuj tablice
-			for (int i = 2; i <= _iRangeSqrt + 1; i++) _oTab[i - 2] = i;
+			for (int i = 2; i <= _iRangeSqrt; i++) _oTab[i - 2] = i;
 
 			//algorytm - sito eratostenesa
-			for (int i = 2; i <= _iRangeSqrt + 1; i++)//pętla po liczbach a nie indeksach
+			for (int i = 2; i <= _iRangeSqrt; i++)//pętla po liczbach a nie indeksach
 			{
 				if (_oTab[i - 2] != 0)//jeżeli wartość w tablicy nie jest zerem
 				{
 					if (a_iNumber % i == 0) return false;//podzielność
 					int j = i + i;//zmienna pomocnicza wielokrotności liczbowej
-					while (j <= _oTab[_iRangeSqrt - 1])//dopóki wielokrotnośc jest mniejsza lub równa pierwiastka z szukanej liczby
+					while (j <= _oTab[_iRangeSqrt - 2])//dopóki wielokrotnośc jest mniejsza lub równa pierwiastka z szukanej liczby
 					{
 						_oTab[j - 2] = 0;//wyzerowanie liczby, która jest wielokrotnością
 						j += i;//dodanie wielkrotności
@@ -434,21 +434,21 @@ namespace Projekt2_Liczby_Pierwsze
 			if (a_iNumber < 2) return false;
 
 			//deklaracja zmiennych
-			int _iRangeSqrt = (int)(Math.Sqrt((double)a_iNumber)) - 1;//pierwiastek z n - 1
-			int[] _oTab = new int[_iRangeSqrt];//nowa tablica
+			int _iRangeSqrt = (int)(Math.Sqrt((double)a_iNumber)) - 1;//pierwiastek z n
+			int[] _oTab = new int[_iRangeSqrt - 1];//nowa tablica
 
 			//inicjuj tablice
-			for (int i = 2; i <= _iRangeSqrt + 1; i++) _oTab[i - 2] = i;
+			for (int i = 2; i <= _iRangeSqrt; i++) _oTab[i - 2] = i;
 
 			//algorytm - sito eratostenesa
-			for (int i = 2; i <= _iRangeSqrt + 1; i++)//pętla po liczbach a nie indeksach
+			for (int i = 2; i <= _iRangeSqrt; i++)//pętla po liczbach a nie indeksach
 			{
 				if (_oTab[i - 2] != 0)//jeżeli wartość w tablicy nie jest zerem
 				{
 					_ulCriticalPoints++;//Dodanie punktu krytycznego
 					if (a_iNumber % i == 0) return false;//podzielność
 					int j = i + i;//zmienna pomocnicza wielokrotności liczbowej
-					while (j <= _oTab[_iRangeSqrt - 1])//dopóki wielokrotnośc jest mniejsza lub równa pierwiastka z szukanej liczby
+					while (j <= _oTab[_iRangeSqrt - 2])//dopóki wielokrotnośc jest mniejsza lub równa pierwiastka z szukanej liczby
 					{
 						_oTab[j - 2] = 0;//wyzerowanie liczby, która jest wielokrotnością
 						j += i;//dodanie wielkrotności
@@ -1014,15 +1014,6 @@ namespace Projekt2_Liczby_Pierwsze
 
 			//TESTS
 			//ShowPrimes(100);
-
-			/*
-			Console.WriteLine("Numer,\tP=6*K+D,\tZasad.Podzielnosci,\tP=6*K+D+Zasad.Podzielnosci,\tEratostenes");
-			BigInteger[] _oPrimeTest = new BigInteger[] { 13, 39, 77, 121 };
-			foreach (BigInteger prime in _oPrimeTest)
-			{
-				Console.WriteLine($"{prime}\t{IsPrimeDivisibilityForm(prime)}\t{IsPrimeDivisibility235(prime)}\t{IsPrimeDivisibilityForm235(prime)}\t{IsPrimeEratotenes(prime)}");
-			}
-			*/
 		}
 	}
 }
