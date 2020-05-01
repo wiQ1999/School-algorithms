@@ -13,11 +13,6 @@ namespace Projekt2_Liczby_Pierwsze
 		/// </summary>
 		public static List<BigInteger> PrimeNumbers = new List<BigInteger>() { 100913, 1009139, 10091401, 100914061, 1009140611, 10091406133, 100914061337, 1009140613399 };
 
-		/// <summary>
-		/// Updating prime numbers array
-		/// </summary>
-		public static BigInteger[] PrimesArray = new BigInteger[] { 2, 3, 5, 7 };
-
 		#region Methods
 
 		static long CountAverage(List<long> a_oTimeList)
@@ -50,7 +45,7 @@ namespace Projekt2_Liczby_Pierwsze
 			while(a_iQuantity >= 1)//Dopóki licznik liczb pierwszych nie zejdzie do 0
 			{
 				//Sprawdzenie pierwszości liczby
-				if (IsPrimeEratotenes(i))
+				if (IsPrimeEratostenes(i))
 				{
 					//Wypisanie na konsoli
 					Console.Write($"{i}, ");
@@ -403,67 +398,65 @@ namespace Projekt2_Liczby_Pierwsze
 			return true;
 		}
 
-		static bool IsPrimeEratotenes(BigInteger a_iNumber)
+		static bool IsPrimeEratostenes(BigInteger a_iNumber)
 		{
 			if (a_iNumber < 2) return false;
 
 			//deklaracja zmiennych
-			int _iRangeSqrt = (int)(Math.Sqrt((double)a_iNumber));
-			int[] _oTab = new int[_iRangeSqrt - 1];
+			int _iRangeSqrt = (int)(Math.Sqrt((double)a_iNumber)) - 1;//pierwiastek z n - 1
+			int[] _oTab = new int[_iRangeSqrt];//nowa tablica
 
 			//inicjuj tablice
-			for (int i = 0; i < _oTab.Length; i++) _oTab[i] = i + 2;
+			for (int i = 2; i <= _iRangeSqrt + 1; i++) _oTab[i - 2] = i;
 
 			//algorytm - sito eratostenesa
-			for (int i = 0; i < _oTab.Length; i++)//pętla po liczbach a nie indeksach
+			for (int i = 2; i <= _iRangeSqrt + 1; i++)//pętla po liczbach a nie indeksach
 			{
-				int _iCurrentNumber = _oTab[i];//Zmienna pomocnicza przechowująca podstawę wielokrotności
-				if (_iCurrentNumber != 0)//jeżeli wartość w tablicy nie jest zerem
+				if (_oTab[i - 2] != 0)//jeżeli wartość w tablicy nie jest zerem
 				{
-					if (a_iNumber % _iCurrentNumber == 0) return false;//podzielność
-					int j = _iCurrentNumber + _iCurrentNumber;//zmienna pomocnicza wielokrotności liczbowej
-					while (j <= _oTab[_oTab.Length - 1])//dopóki wielokrotnośc jest mniejsza lub równa pierwiastka z szukanej liczby
+					if (a_iNumber % i == 0) return false;//podzielność
+					int j = i + i;//zmienna pomocnicza wielokrotności liczbowej
+					while (j <= _oTab[_iRangeSqrt - 1])//dopóki wielokrotnośc jest mniejsza lub równa pierwiastka z szukanej liczby
 					{
 						_oTab[j - 2] = 0;//wyzerowanie liczby, która jest wielokrotnością
-						j += _iCurrentNumber;//dodanie wielkrotności
+						j += i;//dodanie wielkrotności
 					}
 				}
 			}
 
-			return true;
+			return true;//liczba jest pierwsza
 		}
 
-		static bool IsPrimeEratotenes(BigInteger a_iNumber, out ulong _ulCriticalPoints)
+		static bool IsPrimeEratostenes(BigInteger a_iNumber, out ulong _ulCriticalPoints)
 		{
 			_ulCriticalPoints = 0;//Zmienna puktów krytycznych
 
 			if (a_iNumber < 2) return false;
 
 			//deklaracja zmiennych
-			int _iRangeSqrt = (int)(Math.Sqrt((double)a_iNumber));
-			int[] _oTab = new int[_iRangeSqrt - 1];
+			int _iRangeSqrt = (int)(Math.Sqrt((double)a_iNumber)) - 1;//pierwiastek z n - 1
+			int[] _oTab = new int[_iRangeSqrt];//nowa tablica
 
 			//inicjuj tablice
-			for (int i = 0; i < _oTab.Length; i++) _oTab[i] = i + 2;
+			for (int i = 2; i <= _iRangeSqrt + 1; i++) _oTab[i - 2] = i;
 
 			//algorytm - sito eratostenesa
-			for (int i = 0; i < _oTab.Length; i++)//pętla po liczbach a nie indeksach
+			for (int i = 2; i <= _iRangeSqrt + 1; i++)//pętla po liczbach a nie indeksach
 			{
-				int _iCurrentNumber = _oTab[i];//Zmienna pomocnicza przechowująca podstawę wielokrotności
-				if (_iCurrentNumber != 0)//jeżeli wartość w tablicy nie jest zerem
+				if (_oTab[i - 2] != 0)//jeżeli wartość w tablicy nie jest zerem
 				{
 					_ulCriticalPoints++;//Dodanie punktu krytycznego
-					if (a_iNumber % _iCurrentNumber == 0) return false;//podzielność
-					int j = _iCurrentNumber + _iCurrentNumber;//zmienna pomocnicza wielokrotności liczbowej
-					while (j <= _oTab[_oTab.Length - 1])//dopóki wielokrotnośc jest mniejsza lub równa pierwiastka z szukanej liczby
+					if (a_iNumber % i == 0) return false;//podzielność
+					int j = i + i;//zmienna pomocnicza wielokrotności liczbowej
+					while (j <= _oTab[_iRangeSqrt - 1])//dopóki wielokrotnośc jest mniejsza lub równa pierwiastka z szukanej liczby
 					{
 						_oTab[j - 2] = 0;//wyzerowanie liczby, która jest wielokrotnością
-						j += _iCurrentNumber;//dodanie wielkrotności
+						j += i;//dodanie wielkrotności
 					}
 				}
 			}
 
-			return true;
+			return true;//liczba jest pierwsza
 		}
 
 		#endregion
@@ -770,10 +763,10 @@ namespace Projekt2_Liczby_Pierwsze
 			}
 		}
 
-		static void PrimeNumbersEratotenesTime()
+		static void PrimeNumbersEratostenesTime()
 		{
 			//Opis metody w konsoli
-			Console.WriteLine("PrimeNumbersEratotenesTime");
+			Console.WriteLine("PrimeNumbersEratostenesTime");
 
 			//Opis kolumn
 			Console.WriteLine("Number\tTime/Points\t");
@@ -794,7 +787,7 @@ namespace Projekt2_Liczby_Pierwsze
 					stopwatch.Restart();
 
 					//Metoda sprawdzająca liczbę pierwszą
-					IsPrimeEratotenes(prime);
+					IsPrimeEratostenes(prime);
 
 					//Pomiar czasu
 					stopwatch.Stop();
@@ -811,10 +804,10 @@ namespace Projekt2_Liczby_Pierwsze
 			}
 		}
 
-		static void PrimeNumbersEratotenesInstrumentation()
+		static void PrimeNumbersEratostenesInstrumentation()
 		{
 			//Opis metody w konsoli
-			Console.WriteLine("PrimeNumbersEratotenesInstrumentation");
+			Console.WriteLine("PrimeNumbersEratostenesInstrumentation");
 
 			//Opis kolumn
 			Console.WriteLine("Number\tTime/Points\t");
@@ -823,7 +816,7 @@ namespace Projekt2_Liczby_Pierwsze
 			foreach (BigInteger prime in PrimeNumbers)
 			{
 				//Metoda sprawdzająca liczbę pierwszą
-				IsPrimeEratotenes(prime, out ulong _ulCriticalPoints);//Zmienna przechowująca ilość punktów krytycznych
+				IsPrimeEratostenes(prime, out ulong _ulCriticalPoints);//Zmienna przechowująca ilość punktów krytycznych
 
 				//Wypisanie wyniku na tablicy
 				Console.WriteLine($"{prime}\t{_ulCriticalPoints}");
@@ -845,7 +838,7 @@ namespace Projekt2_Liczby_Pierwsze
 			int i = 0, _iQuantity = 100, _iBy = 10, _iTry = 10;
 
 			//Opis kolumn
-			Console.WriteLine("Number\tIsPrimeDivisibilityForm\tIsPrimeDivisibility235\tIsPrimeDivisibilityForm235\t");
+			Console.WriteLine("Number\tIsPrimeDivisibilityForm\tIsPrimeDivisibility235\tIsPrimeDivisibilityForm235\tIsPrimeEratotenes");
 
 			//Główna pętla
 			for (BigInteger x = 1; x <= _iMax; x *= _iBy)
@@ -892,6 +885,21 @@ namespace Projekt2_Liczby_Pierwsze
 					while (i <= _iQuantity)//Pętla dopóki licznik nie jest podaną wielkością liczbową
 					{
 						IsPrimeDivisibilityForm235(x + i++);//Funkcja liczb pierwszych
+					}
+					stopwatch.Stop();//Zatrzymanie stopera
+					_oTimes.Add(stopwatch.ElapsedMilliseconds);//Dodanie czasu do lsity czasów
+				}
+				Console.Write(CountAverage(_oTimes) + "\t");//Obliczenie średniej czasowej i jej wyświetlenie
+
+				//IsPrimeEratotenes
+				_oTimes.Clear();//Wyczyszczenie listy czasów
+				for (int j = 0; j < _iTry; j++)//Ilość prób
+				{
+					i = 0;//Zresetowanie licznika kolejnych liczb naturalnych
+					stopwatch.Restart();//Restart stopera
+					while (i <= _iQuantity)//Pętla dopóki licznik nie jest podaną wielkością liczbową
+					{
+						IsPrimeEratostenes(x + i++);//Funkcja liczb pierwszych
 					}
 					stopwatch.Stop();//Zatrzymanie stopera
 					_oTimes.Add(stopwatch.ElapsedMilliseconds);//Dodanie czasu do lsity czasów
@@ -988,11 +996,11 @@ namespace Projekt2_Liczby_Pierwsze
 			//Hybryda metod podzielności za pomocą wzoru p = 6 * k + d oraz podzielności przez 2,3 i 5 szukania liczb pierwszych - instrumentacja
 			//PrimeNumbersDivisibilityForm235Instrumentation();
 
-			//Metoda sita Eratotenesa szukania liczb pierwszych - pomiar czasu
-			//PrimeNumbersEratotenesTime();
+			//Metoda sita Eratostenesa szukania liczb pierwszych - pomiar czasu
+			//PrimeNumbersEratostenesTime();
 
-			//Metoda sita Eratotenesa szukania liczb pierwszych -instrumentacja
-			//PrimeNumbersEratotenesInstrumentation();
+			//Metoda sita Eratostenesa szukania liczb pierwszych - instrumentacja
+			//PrimeNumbersEratostenesInstrumentation();
 
 
 
@@ -1004,18 +1012,17 @@ namespace Projekt2_Liczby_Pierwsze
 			//NumericalSetTestInstrumentation();
 
 
-
 			//TESTS
 			//ShowPrimes(100);
 
-			
+			/*
 			Console.WriteLine("Numer,\tP=6*K+D,\tZasad.Podzielnosci,\tP=6*K+D+Zasad.Podzielnosci,\tEratostenes");
 			BigInteger[] _oPrimeTest = new BigInteger[] { 13, 39, 77, 121 };
 			foreach (BigInteger prime in _oPrimeTest)
 			{
 				Console.WriteLine($"{prime}\t{IsPrimeDivisibilityForm(prime)}\t{IsPrimeDivisibility235(prime)}\t{IsPrimeDivisibilityForm235(prime)}\t{IsPrimeEratotenes(prime)}");
 			}
-			
+			*/
 		}
 	}
 }
