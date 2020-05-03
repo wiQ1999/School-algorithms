@@ -434,7 +434,7 @@ namespace Projekt2_Liczby_Pierwsze
 			if (a_iNumber < 2) return false;
 
 			//deklaracja zmiennych
-			int _iRangeSqrt = (int)(Math.Sqrt((double)a_iNumber)) - 1;//pierwiastek z n
+			int _iRangeSqrt = (int)(Math.Sqrt((double)a_iNumber));//pierwiastek z n
 			int[] _oTab = new int[_iRangeSqrt - 1];//nowa tablica
 
 			//inicjuj tablice
@@ -835,7 +835,7 @@ namespace Projekt2_Liczby_Pierwsze
 			//Deklaracja zmiennych
 			List<long> _oTimes = new List<long>();
 			BigInteger _iMax = 1000000000000000000;
-			int i = 0, _iQuantity = 100, _iBy = 10, _iTry = 10;
+			int i = 1, _iQuantity = 100, _iBy = 10, _iTry = 10;
 
 			//Opis kolumn
 			Console.WriteLine("Number\tIsPrimeDivisibilityForm\tIsPrimeDivisibility235\tIsPrimeDivisibilityForm235\tIsPrimeEratotenes");
@@ -915,18 +915,18 @@ namespace Projekt2_Liczby_Pierwsze
 		{
 			//Deklaracja zmiennych
 			BigInteger _iMax = 1000000000000000000;
-			int i = 0, _iQuantity = 100, _iBy = 10;
+			int i = 1, _iQuantity = 100, _iBy = 10;
 			ulong _ulCriticalPointsSum = 0;
 
 			//Opis kolumn
-			Console.WriteLine("Number\tIsPrimeDivisibilityForm\tIsPrimeDivisibility235\tIsPrimeDivisibilityForm235\t");
+			Console.WriteLine("Number\tIsPrimeDivisibilityForm\tIsPrimeDivisibility235\tIsPrimeDivisibilityForm235\tIsPrimeEratostenes");
 
 			//Główna pętla
 			for (BigInteger x = 1; x <= _iMax; x *= _iBy)
 			{
 				//Wielkość przeszukiwanych liczb
 				Console.Write(x + "\t");
-
+				
 				//IsPrimeDivisibilityForm
 				i = 0;//Zresetowanie licznika kolejnych liczb naturalnych
 				_ulCriticalPointsSum = 0;//Zmienna przechowująca sumę punktów krytycznych
@@ -956,6 +956,16 @@ namespace Projekt2_Liczby_Pierwsze
 					_ulCriticalPointsSum += _ulCriticalPoints;//Sumowanie punktów krytycznych
 				}
 				Console.Write(_ulCriticalPointsSum + "\t");//Wyświetlenei punktów krytycznych
+				
+				//IsPrimeDivisibilityForm
+				i = 0;//Zresetowanie licznika kolejnych liczb naturalnych
+				_ulCriticalPointsSum = 0;//Zmienna przechowująca sumę punktów krytycznych
+				while (i <= _iQuantity)//Pętla dopóki licznik nie jest podaną wielkością liczbową
+				{
+					IsPrimeEratostenes(x + i++, out ulong _ulCriticalPoints);//Funkcja liczb pierwszych
+					_ulCriticalPointsSum += _ulCriticalPoints;//Sumowanie punktów krytycznych
+				}
+				Console.Write(_ulCriticalPointsSum + "\t");//Wyświetlenei punktów krytycznych
 
 				//Przejście do nastepnej lini
 				Console.WriteLine();
@@ -967,7 +977,7 @@ namespace Projekt2_Liczby_Pierwsze
 		static void Main(string[] args)
 		{
 			//Postawowa metoda szukania liczb pierwszych - pomiar czasu
-			//PrimeNumbersTime();															TODO!!!!
+			//PrimeNumbersTime();
 
 			//Podstawowa metoda szukania liczb pierwszych - instrumentacja
 			//PrimeNumbersInstrumentation();
@@ -1001,7 +1011,6 @@ namespace Projekt2_Liczby_Pierwsze
 
 			//Metoda sita Eratostenesa szukania liczb pierwszych - instrumentacja
 			//PrimeNumbersEratostenesInstrumentation();
-
 
 
 
