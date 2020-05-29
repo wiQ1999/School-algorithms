@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "y7Q0fmP8MrmCkbgqS5kqMw3NifOvEbIiQDuSxPJ6+4SPd8Vd4tsErvmVEIMnm0+IMsJVi0B81ToJXb/0pWOxog==",
+  "success": true,
+  "projectFilePath": "E:\\Programowanie\\C#\\Algorytmy\\Projekt3_Sortowanie\\Projekt3_Sortowanie\\Projekt3_Sortowanie.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Home\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\3.1.2\\microsoft.aspnetcore.app.ref.3.1.2.nupkg.sha512"
+  ],
+  "logs": []
+}

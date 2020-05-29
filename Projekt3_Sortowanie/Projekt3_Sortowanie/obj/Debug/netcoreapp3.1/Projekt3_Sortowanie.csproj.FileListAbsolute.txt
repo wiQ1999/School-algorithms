@@ -1,0 +1,13 @@
+E:\Programowanie\C#\Algorytmy\Projekt3_Sortowanie\Projekt3_Sortowanie\bin\Debug\netcoreapp3.1\Projekt3_Sortowanie.exe
+E:\Programowanie\C#\Algorytmy\Projekt3_Sortowanie\Projekt3_Sortowanie\bin\Debug\netcoreapp3.1\Projekt3_Sortowanie.deps.json
+E:\Programowanie\C#\Algorytmy\Projekt3_Sortowanie\Projekt3_Sortowanie\bin\Debug\netcoreapp3.1\Projekt3_Sortowanie.runtimeconfig.json
+E:\Programowanie\C#\Algorytmy\Projekt3_Sortowanie\Projekt3_Sortowanie\bin\Debug\netcoreapp3.1\Projekt3_Sortowanie.runtimeconfig.dev.json
+E:\Programowanie\C#\Algorytmy\Projekt3_Sortowanie\Projekt3_Sortowanie\bin\Debug\netcoreapp3.1\Projekt3_Sortowanie.dll
+E:\Programowanie\C#\Algorytmy\Projekt3_Sortowanie\Projekt3_Sortowanie\bin\Debug\netcoreapp3.1\Projekt3_Sortowanie.pdb
+E:\Programowanie\C#\Algorytmy\Projekt3_Sortowanie\Projekt3_Sortowanie\obj\Debug\netcoreapp3.1\Projekt3_Sortowanie.csprojAssemblyReference.cache
+E:\Programowanie\C#\Algorytmy\Projekt3_Sortowanie\Projekt3_Sortowanie\obj\Debug\netcoreapp3.1\Projekt3_Sortowanie.AssemblyInfoInputs.cache
+E:\Programowanie\C#\Algorytmy\Projekt3_Sortowanie\Projekt3_Sortowanie\obj\Debug\netcoreapp3.1\Projekt3_Sortowanie.AssemblyInfo.cs
+E:\Programowanie\C#\Algorytmy\Projekt3_Sortowanie\Projekt3_Sortowanie\obj\Debug\netcoreapp3.1\Projekt3_Sortowanie.csproj.CoreCompileInputs.cache
+E:\Programowanie\C#\Algorytmy\Projekt3_Sortowanie\Projekt3_Sortowanie\obj\Debug\netcoreapp3.1\Projekt3_Sortowanie.dll
+E:\Programowanie\C#\Algorytmy\Projekt3_Sortowanie\Projekt3_Sortowanie\obj\Debug\netcoreapp3.1\Projekt3_Sortowanie.pdb
+E:\Programowanie\C#\Algorytmy\Projekt3_Sortowanie\Projekt3_Sortowanie\obj\Debug\netcoreapp3.1\Projekt3_Sortowanie.genruntimeconfig.cache
