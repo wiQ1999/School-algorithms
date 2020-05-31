@@ -2,7 +2,7 @@
 
 namespace Projekt3_Sortowanie
 {
-	class RandomTable
+	class RandomTable : ITableGenerator
 	{
 		/// <summary>
 		/// Generate random numbers array

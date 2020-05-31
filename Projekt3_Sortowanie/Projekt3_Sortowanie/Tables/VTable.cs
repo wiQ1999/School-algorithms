@@ -1,6 +1,6 @@
 ﻿namespace Projekt3_Sortowanie.Tables
 {
-	class VTable
+	class VTable : ITableGenerator
 	{
 		/// <summary>
 		/// Generate V-shaped numbers array

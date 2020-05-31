@@ -9,7 +9,7 @@ namespace Projekt3_Sortowanie
 		{
 		}
 		
-		public abstract int[] Sort(int[] a_oTab);
+		public abstract void Sort(int[] a_oTab);
 
 		public void MeasureSortTime(int a_iTabSize)
 		{
@@ -28,7 +28,7 @@ namespace Projekt3_Sortowanie
 			stopwatch.Start();
 
 			//wywołanie funkncji
-			int[] _oSortedTab = Sort(_oMeasureTab);
+			Sort(_oMeasureTab);
 
 			//pomiar czasu
 			stopwatch.Stop();
@@ -36,7 +36,7 @@ namespace Projekt3_Sortowanie
 			//wyświetlenie tablicy posortowanej
 			Console.WriteLine();
 			Console.WriteLine("Tablica posortowana");
-			DisplayTab(_oSortedTab);
+			DisplayTab(_oMeasureTab);
 
 			//wyświetlanie czasu
 			Console.WriteLine();
