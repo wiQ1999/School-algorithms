@@ -26,7 +26,7 @@
 
 				//pętla po reszcie liczb
 				for (uint j = i + 1; j < a_oTab.Length; j++)
-
+				{
 					//Sprawdzanie czy wartość z tablicy jest mniejsza niż wartość minimalnego indkesu
 					if (a_oTab[j] < _iSwapValue)
 					{
@@ -34,6 +34,7 @@
 						_iMinIndex = j;
 						_iSwapValue = a_oTab[j];
 					}
+				}
 
 				//zamiana wartości w tablicy
 				a_oTab[_iMinIndex] = a_oTab[i];

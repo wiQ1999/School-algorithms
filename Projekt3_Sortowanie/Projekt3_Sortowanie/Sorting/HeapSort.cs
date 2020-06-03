@@ -30,23 +30,23 @@ namespace Projekt3_Sortowanie.Sorting
             t[i] = buf;
         }
 
-        public override void Sort(int[] tab)
+        public override void Sort(int[] a_oTab)
         {
-            uint left = (uint)tab.Length / 2;
-            uint right = (uint)tab.Length - 1;
+            uint left = (uint)a_oTab.Length / 2;
+            uint right = (uint)a_oTab.Length - 1;
             while (left > 0)
             {
                 left--;
-                heapify(tab, left, right);
+                heapify(a_oTab, left, right);
             }
 
             while (right > 0)
             {
-                int buf = tab[left];
-                tab[left] = tab[right];
-                tab[right] = buf;
+                int buf = a_oTab[left];
+                a_oTab[left] = a_oTab[right];
+                a_oTab[right] = buf;
                 right--;
-                heapify(tab, left, right);
+                heapify(a_oTab, left, right);
             }
         }
     }

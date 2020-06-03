@@ -8,33 +8,34 @@ namespace Projekt3_Sortowanie.Sorting
 		{
 		}
 
-        public override void Sort(int[] tab)
+        public override void Sort(int[] a_oTab)
         {
-            int left = 1, right = tab.Length - 1, k = tab.Length - 1;
+            int _iLeft = 1, _iRight = a_oTab.Length - 1, k = _iRight;
+
             do
             {
-                for (int j = right; j >= left; j--)
-                    if (tab[j - 1] > tab[j])
+                for (int j = _iRight; j >= _iLeft; j--)
+                    if (a_oTab[j - 1] > a_oTab[j])
                     {
-                        int temp = tab[j - 1];
-                        tab[j - 1] = tab[j];
-                        tab[j] = temp;
+                        int temp = a_oTab[j - 1];
+                        a_oTab[j - 1] = a_oTab[j];
+                        a_oTab[j] = temp;
                         k = j;
                     }
 
-                left = k + 1;
+                _iLeft = k + 1;
 
-                for (int j = left; j <= right; j++)
-                    if (tab[j - 1] > tab[j])
+                for (int j = _iLeft; j <= _iRight; j++)
+                    if (a_oTab[j - 1] > a_oTab[j])
                     {
-                        int temp = tab[j - 1];
-                        tab[j - 1] = tab[j];
-                        tab[j] = temp;
+                        int temp = a_oTab[j - 1];
+                        a_oTab[j - 1] = a_oTab[j];
+                        a_oTab[j] = temp;
                         k = j;
                     }
 
-                right = k - 1;
-            } while (left <= right);
+                _iRight = k - 1;
+            } while (_iLeft <= _iRight);
         }
     }
 }

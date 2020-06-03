@@ -8,18 +8,23 @@
 
         public override void Sort(int[] a_oTab)
         {
+            //główna pętla
             for (uint i = 1; i < a_oTab.Length; i++)
             {
-                uint j = i;
-                int temp = a_oTab[j];
+                //zmienne koljenych wartości
+                uint _iIndex = i;
+                int _iValue = a_oTab[_iIndex];
 
-                while ((j > 0) && (a_oTab[j - 1] > temp))
+                //dopóki jest mniejszy niż indeks 0 && wartość po lewej jest mniejsza niż wartość ze sprawdzanego indeksu
+                while ((_iIndex > 0) && (a_oTab[_iIndex - 1] > _iValue))
                 {
-                    a_oTab[j] = a_oTab[j - 1];
-                    j--;
+                    //przesuwanie wartości
+                    a_oTab[_iIndex] = a_oTab[_iIndex - 1];
+                    _iIndex--;
                 }
 
-                a_oTab[j] = temp;
+                //nadpisanie wartości
+                a_oTab[_iIndex] = _iValue;
             }
         }
     }
