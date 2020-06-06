@@ -101,7 +101,7 @@ namespace Projekt3_Sortowanie
 				}
 
 				//główna pętla wielkości sortowanych tablic
-				for (int i = 50_000; i < g_iBaseTabSize; i += 5_000)
+				for (int i = 50_000; i <= g_iBaseTabSize; i += 5_000)
 				{
 					//określa który algorytm ma sortować
 					switch (type)
@@ -155,7 +155,7 @@ namespace Projekt3_Sortowanie
 				}
 
 				//główna pętla wielkości sortowanych tablic
-				for (int i = 50_000; i < g_iBaseTabSize; i += 5_000)
+				for (int i = 50_000; i <= g_iBaseTabSize; i += 5_000)
 				{
 					//określa który algorytm ma sortować
 					switch (type)
@@ -210,7 +210,7 @@ namespace Projekt3_Sortowanie
 				}
 
 				//główna pętla wielkości sortowanych tablic
-				for (int i = 50_000; i < g_iBaseTabSize; i += 5_000)
+				for (int i = 50_000; i <= g_iBaseTabSize; i += 5_000)
 				{
 					//określa który algorytm ma sortować
 					switch (type)
@@ -265,7 +265,7 @@ namespace Projekt3_Sortowanie
 				}
 
 				//główna pętla wielkości sortowanych tablic
-				for (int i = 50_000; i < g_iBaseTabSize; i += 5_000)
+				for (int i = 50_000; i <= g_iBaseTabSize; i += 5_000)
 				{
 					//określa który algorytm ma sortować
 					switch (type)
@@ -287,19 +287,103 @@ namespace Projekt3_Sortowanie
 			}
 		}
 
+		static void QuickSortTestRandomTable()
+		{
+			//tworzenie tablicy bazowej
+			RandomTable randomTable = new RandomTable();
+			int[] _oBaseTable = randomTable.GenerateTab(200_000);
+
+			//tworzenie obiektów sortujących
+			QuickSortIteration quickSortIteration = new QuickSortIteration(_oBaseTable);
+			QuickSortRecursion quickSortRecursion = new QuickSortRecursion(_oBaseTable);
+
+			//pętla po typach algoryutmów sortujących
+			for (int type = 0; type < 2; type++)
+			{
+				//wypisanie informacji dla każdego typu algorytmu
+				switch (type)
+				{
+					case 0:
+						Console.WriteLine("QuickSortIteration");
+						break;
+					case 1:
+						Console.WriteLine("QuickSortRecursion");
+						break;
+				}
+
+				//główna pętla wielkości sortowanych tablic
+				for (int i = 50_000; i <= g_iBaseTabSize; i += 5_000)
+				{
+					//określa który algorytm ma sortować
+					switch (type)
+					{
+						case 0:
+							quickSortIteration.MeasureSortTime(i);
+							break;
+						case 1:
+							quickSortRecursion.MeasureSortTime(i);
+							break;
+					}
+				}
+			}
+		}
+
+		static void QuickSortTestDifferentPivots()
+		{
+			//tworzenie tablicy bazowej
+			ATable aTable = new ATable();
+			int[] _oBaseTable = aTable.GenerateTab(200_000);
+
+			//tworzenie obiektów sortujących
+			//QuickSortIteration quickSortIteration = new QuickSortIteration(_oBaseTable);
+			QuickSortIteration quickSortIteration = new QuickSortIteration(_oBaseTable);
+
+			//pętla po typach algoryutmów sortujących
+			for (int type = 0; type < 3; type++)
+			{
+				//wypisanie informacji dla każdego typu algorytmu
+				switch (type)
+				{
+					case 0:
+						Console.WriteLine("QuickSortI-iteracja-klucz środkowy");
+						break;
+					case 1:
+						Console.WriteLine("QuickSortI-iteracja-klucz prawy");
+						break;
+					case 2:
+						Console.WriteLine("QuickSortI-iteracja-klucz losowy");
+						break;
+				}
+
+				//zmiena kllucza
+				quickSortIteration.Pivot = type;
+
+				//główna pętla wielkości sortowanych tablic
+				for (int i = 50_000; i <= g_iBaseTabSize; i += 5_000)
+				{
+					quickSortIteration.MeasureSortTime(i);
+				}
+			}
+		}
+
 		#endregion
 
 		static void Main(string[] args)
 		{
+			/*
 			GrowingTableTest();
 			
 			DecreasingTableTest();
-
+			
 			ConstantTableTest();
-
+			
 			RandomTableTest();
+			*/
+			//VTableTest();
 
-			VTableTest();
+			//QuickSortTestRandomTable();
+
+			//QuickSortTestDifferentPivots();
 		}
 	}
 }
