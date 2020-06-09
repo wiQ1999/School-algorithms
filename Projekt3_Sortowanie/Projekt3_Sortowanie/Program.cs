@@ -245,7 +245,7 @@ namespace Projekt3_Sortowanie
 			HeapSort heapSort = new HeapSort(_oBaseTable);
 
 			//pętla po typach algoryutmów sortujących
-			for (int type = 0; type < 4; type++)
+			for (int type = 2; type < 4; type++)
 			{
 				//wypisanie informacji dla każdego typu algorytmu
 				switch (type)
@@ -378,12 +378,12 @@ namespace Projekt3_Sortowanie
 			ConstantTableTest();
 			
 			RandomTableTest();
+			
+			VTableTest();
 			*/
-			//VTableTest();
-
 			//QuickSortTestRandomTable();
-
-			//QuickSortTestDifferentPivots();
+			
+			QuickSortTestDifferentPivots();
 		}
 	}
 }
