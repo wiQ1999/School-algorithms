@@ -335,8 +335,8 @@ namespace Projekt3_Sortowanie
 			int[] _oBaseTable = aTable.GenerateTab(200_000);
 
 			//tworzenie obiektów sortujących
+			QuickSortRecursion quickSortRecursion = new QuickSortRecursion(_oBaseTable);
 			//QuickSortIteration quickSortIteration = new QuickSortIteration(_oBaseTable);
-			QuickSortIteration quickSortIteration = new QuickSortIteration(_oBaseTable);
 
 			//pętla po typach algoryutmów sortujących
 			for (int type = 0; type < 3; type++)
@@ -345,23 +345,23 @@ namespace Projekt3_Sortowanie
 				switch (type)
 				{
 					case 0:
-						Console.WriteLine("QuickSortI-iteracja-klucz środkowy");
+						Console.WriteLine("QuickSortI-klucz środkowy");
 						break;
 					case 1:
-						Console.WriteLine("QuickSortI-iteracja-klucz prawy");
+						Console.WriteLine("QuickSortI-klucz prawy");
 						break;
 					case 2:
-						Console.WriteLine("QuickSortI-iteracja-klucz losowy");
+						Console.WriteLine("QuickSortI-klucz losowy");
 						break;
 				}
 
 				//zmiena kllucza
-				quickSortIteration.Pivot = type;
+				quickSortRecursion.Pivot = type;
 
 				//główna pętla wielkości sortowanych tablic
 				for (int i = 50_000; i <= g_iBaseTabSize; i += 5_000)
 				{
-					quickSortIteration.MeasureSortTime(i);
+					quickSortRecursion.MeasureSortTime(i);
 				}
 			}
 		}
@@ -370,7 +370,7 @@ namespace Projekt3_Sortowanie
 
 		static void Main(string[] args)
 		{
-			/*
+			
 			GrowingTableTest();
 			
 			DecreasingTableTest();
@@ -380,8 +380,8 @@ namespace Projekt3_Sortowanie
 			RandomTableTest();
 			
 			VTableTest();
-			*/
-			//QuickSortTestRandomTable();
+			
+			QuickSortTestRandomTable();
 			
 			QuickSortTestDifferentPivots();
 		}

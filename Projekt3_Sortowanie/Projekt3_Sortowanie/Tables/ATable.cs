@@ -19,9 +19,9 @@
 			for (int i = 0; i < a_iSize; i++)
 			{
 				if (i < a_iSize / 2)
-					_oReturn[i] = _iValue++;
+					_oReturn[i] = ++_iValue;
 				else
-					_oReturn[i] = _iValue--;
+					_oReturn[i] = --_iValue;
 			}
 
 			//zwrócenie tablicy

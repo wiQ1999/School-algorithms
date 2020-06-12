@@ -14,16 +14,16 @@ namespace Projekt3_Sortowanie.Sorting
 
         public override void Sort(int[] a_oTab)
         {
-            Sort(a_oTab, 0, a_oTab.Length - 1);
+            QuickSort(a_oTab, 0, a_oTab.Length - 1);
         }
 
         Random rnd = new Random();
 
-        private void Sort(int[] a_oTab, int a_iLeft, int a_iRight)
+        private void QuickSort(int[] a_oTab, int a_iLeft, int a_iRight)
         {
             //inicjalizacja mziennych
             int i = a_iLeft, j = a_iRight;
-
+            
             //pivot
             int _iPivot = 0;
             switch (Pivot)
@@ -54,8 +54,8 @@ namespace Projekt3_Sortowanie.Sorting
                 }
             } while (i <= j);
 
-            if (a_iLeft < j) Sort(a_oTab, a_iLeft, j);
-            if (i < a_iRight) Sort(a_oTab, i, a_iRight);
+            if (a_iLeft < j) QuickSort(a_oTab, a_iLeft, j);
+            if (i < a_iRight) QuickSort(a_oTab, i, a_iRight);
         }
     }
 }
